@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 340" width="1000" height="340" aria-label="Picape, vista lateral original">
+  <defs>
+    <linearGradient id="pickup-sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff" stop-opacity="0.28"/>
+      <stop offset="35%" stop-color="#fff" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.42"/>
+    </linearGradient>
+    <linearGradient id="pickup-glass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9eb4c8" stop-opacity="0.55"/>
+      <stop offset="45%" stop-color="#2a3a4a" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="#0a1218" stop-opacity="0.92"/>
+    </linearGradient>
+    <linearGradient id="pickup-glow" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="var(--accent, #e10600)" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="var(--accent, #e10600)" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="pickup-rim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d8d8de"/>
+      <stop offset="100%" stop-color="#6a6a72"/>
+    </linearGradient>
+    <radialGradient id="pickup-tire" cx="50%" cy="45%" r="55%">
+      <stop offset="70%" stop-color="#1a1a1e"/>
+      <stop offset="100%" stop-color="#050506"/>
+    </radialGradient>
+    <clipPath id="pickup-bodyClip"><path d="M74,200 C66,184 82,152 118,142 C184,132 254,130 322,128 C348,128 372,108 394,86 C416,68 444,62 488,62 C545,60 590,66 618,90 C636,106 646,122 650,132 L650,146 L918,148 L932,148 L936,156 L928,220 L880.0,220.0 A73.0,73.0 0 0 0 730.0,220.0 L275.0,220.0 A73.0,73.0 0 0 0 125.0,220.0 L104,220 C88,220 78,204 76,188 Z"/></clipPath>
+  </defs>
+  <ellipse class="underglow" cx="500" cy="300" rx="360" ry="18" fill="url(#pickup-glow)"/>
+  <ellipse cx="500" cy="304" rx="340" ry="11" fill="#000" opacity="0.45"/>
+
+  <g class="car-body">
+    <path class="paint" d="M74,200 C66,184 82,152 118,142 C184,132 254,130 322,128 C348,128 372,108 394,86 C416,68 444,62 488,62 C545,60 590,66 618,90 C636,106 646,122 650,132 L650,146 L918,148 L932,148 L936,156 L928,220 L880.0,220.0 A73.0,73.0 0 0 0 730.0,220.0 L275.0,220.0 A73.0,73.0 0 0 0 125.0,220.0 L104,220 C88,220 78,204 76,188 Z" fill="var(--car-paint, #b1121a)" stroke="#140404" stroke-width="1.5" stroke-linejoin="round"/>
+    <path clip-path="url(#pickup-bodyClip)" d="M40,30 H960 V280 H40 Z" fill="url(#pickup-sheen)" opacity="0.95"/>
+
+    <path d="M78,202 L132,190 L214,190 L208,214 L96,218 Z" fill="#0c0c10" opacity="0.94"/>
+    <path d="M116,152 L190,146 L194,164 L120,168 Z" fill="#16161c"/>
+    <path class="paint greenhouse" d="M322,128 C348,128 372,108 394,86 C416,68 444,62 488,62 C545,60 590,66 618,90 C636,106 646,122 650,132 L628,132 C616,116 600,98 570,86 C530,72 470,70 430,72 C400,74 380,84 360,100 C340,118 326,128 328,128 Z"
+          fill="var(--car-paint, #b1121a)" stroke="#1a0808" stroke-width="0.7"/>
+    <path class="glass windshield" d="M332,128 C362,126 384,104 410,84 C432,70 458,64 488,64 L512,64 L512,132 L332,132 Z" fill="url(#pickup-glass)" stroke="#1a2028" stroke-width="1.15"/>
+    <path class="glass win-front" d="M526,64 L592,70 L636,132 L526,132 Z" fill="url(#pickup-glass)" stroke="#1a2028" stroke-width="1.1"/>
+    <path class="glass rear-glass" d="M636,132 L650,132 L650,152 L628,152 Z" fill="url(#pickup-glass)" stroke="#1a2028" stroke-width="0.8" opacity="0.85"/>
+    <path d="M350,98 L412,70 L422,108 L366,122 Z" fill="#fff" opacity="0.12"/>
+    <path d="M512,62 L512,134" stroke="#1a0a0a" stroke-width="7.5"/>
+    <path d="M592,68 L636,132" stroke="#1a0a0a" stroke-width="7.5"/>
+    <path d="M650,132 L650,220" stroke="#1a0a0a" stroke-width="3.2"/>
+    <path d="M650,146 L918,148" fill="none" stroke="#fff" stroke-opacity="0.16" stroke-width="1.7"/>
+    <path d="M662,150 L908,152 L904,214 L658,212 Z" fill="#16161c" opacity="0.30"/>
+    <path d="M908,148 L932,148 L928,220 L904,220 Z" fill="#0e0e12" opacity="0.72"/>
+    <path d="M214,132 C360,124 520,122 640,132" fill="none" stroke="#fff" stroke-opacity="0.14" stroke-width="1.3"/>
+    <path d="M176,176 C340,162 560,160 900,176" fill="none" stroke="#000" stroke-opacity="0.28" stroke-width="1.25"/>
+    <path d="M512,132 L504,220" stroke="#000" stroke-opacity="0.38" stroke-width="1.3"/>
+    <rect x="554" y="148" width="22" height="5" rx="2" fill="#2a2a30"/>
+    <path d="M338,122 L386,104 L396,124 L348,140 Z" fill="#16161a" stroke="#2a0a0a" stroke-width="0.8"/>
+    <path d="M372,108 L390,104 L394,120 L378,122 Z" fill="#9aa4b0" opacity="0.55"/>
+    <path d="M300,208 L910,208 L922,220 L286,220 Z" fill="#0a0a0c" opacity="0.85"/>
+    <path d="M108,202 L910,202 L920,220 L98,220 Z" fill="#1a1a1e" opacity="0.4"/>
+    <path class="headlight" d="M88,158 L168,146 L174,162 L96,178 Z" fill="#e8eef8"/>
+    <path d="M92,160 L168,148 L170,156 L96,168 Z" fill="#fff" opacity="0.85"/>
+    <path class="headlight-beam" d="M88,158 L10,130 L10,200 L96,180 Z" fill="#fff5e0" opacity="0"/>
+    <path class="turn-fl" d="M110,166 L144,158 L144,170 L110,178 Z" fill="#ffb000" opacity="0"/>
+    <path class="taillight" d="M920,158 L960,166 L954,206 L916,198 Z" fill="#4a0000"/>
+    <path d="M924,164 L956,170 L954,178 L922,172 Z" fill="#ff3a3a" opacity="0.55"/>
+    <path class="brake-light" d="M920,160 L958,168 L952,202 L916,194 Z" fill="#ff1a1a" opacity="0"/>
+    <path class="turn-rl" d="M924,184 L950,190 L948,200 L922,194 Z" fill="#ffb000" opacity="0"/>
+
+  </g>
+
+  <g class="wheel wheel-front" transform="translate(200.0,252.0)">
+    <circle r="70.0" fill="url(#pickup-tire)"/>
+    <circle r="58.8" fill="#141418"/>
+    <circle r="56.0" fill="none" stroke="#7a7a84" stroke-width="2.1"/>
+    <circle r="49.0" fill="#26262e" stroke="url(#pickup-rim)" stroke-width="3.1"/>
+    <g class="spokes" fill="#d4d4dc" stroke="#8a8a94" stroke-width="0.35">
+      <path d="M0.00,-12.60 L-4.82,-47.78 L4.82,-47.78 Z"/><path d="M7.41,-10.19 L24.18,-41.49 L31.98,-35.82 Z"/><path d="M11.98,-3.89 L43.95,-19.35 L46.93,-10.18 Z"/><path d="M11.98,3.89 L46.93,10.18 L43.95,19.35 Z"/><path d="M7.41,10.19 L31.98,35.82 L24.18,41.49 Z"/><path d="M0.00,12.60 L4.82,47.78 L-4.82,47.78 Z"/><path d="M-7.41,10.19 L-24.18,41.49 L-31.98,35.82 Z"/><path d="M-11.98,3.89 L-43.95,19.35 L-46.93,10.18 Z"/><path d="M-11.98,-3.89 L-46.93,-10.18 L-43.95,-19.35 Z"/><path d="M-7.41,-10.19 L-31.98,-35.82 L-24.18,-41.49 Z"/>
+    </g>
+    <circle r="10.5" fill="#1a1a20" stroke="#d0d0d8" stroke-width="1.5"/>
+    <circle r="4.4" fill="#3a3a44"/>
+    <circle r="70.0" fill="none" stroke="#0a0a0c" stroke-width="1.1"/>
+  </g>
+  <g class="wheel wheel-rear" transform="translate(805.0,252.0)">
+    <circle r="70.0" fill="url(#pickup-tire)"/>
+    <circle r="58.8" fill="#141418"/>
+    <circle r="56.0" fill="none" stroke="#7a7a84" stroke-width="2.1"/>
+    <circle r="49.0" fill="#26262e" stroke="url(#pickup-rim)" stroke-width="3.1"/>
+    <g class="spokes" fill="#d4d4dc" stroke="#8a8a94" stroke-width="0.35">
+      <path d="M0.00,-12.60 L-4.82,-47.78 L4.82,-47.78 Z"/><path d="M7.41,-10.19 L24.18,-41.49 L31.98,-35.82 Z"/><path d="M11.98,-3.89 L43.95,-19.35 L46.93,-10.18 Z"/><path d="M11.98,3.89 L46.93,10.18 L43.95,19.35 Z"/><path d="M7.41,10.19 L31.98,35.82 L24.18,41.49 Z"/><path d="M0.00,12.60 L4.82,47.78 L-4.82,47.78 Z"/><path d="M-7.41,10.19 L-24.18,41.49 L-31.98,35.82 Z"/><path d="M-11.98,3.89 L-43.95,19.35 L-46.93,10.18 Z"/><path d="M-11.98,-3.89 L-46.93,-10.18 L-43.95,-19.35 Z"/><path d="M-7.41,-10.19 L-31.98,-35.82 L-24.18,-41.49 Z"/>
+    </g>
+    <circle r="10.5" fill="#1a1a20" stroke="#d0d0d8" stroke-width="1.5"/>
+    <circle r="4.4" fill="#3a3a44"/>
+    <circle r="70.0" fill="none" stroke="#0a0a0c" stroke-width="1.1"/>
+  </g>
+</svg>

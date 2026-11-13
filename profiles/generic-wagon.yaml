@@ -1,0 +1,23 @@
+id: generic-wagon
+name: Perua / wagon (genérica)
+make: ""
+model: Wagon
+year_from: 2000
+year_to: 2035
+body: wagon
+region: BR
+engine: ""
+fuel:
+  type: flex
+  tank_liters: 55
+  fallback_l100: 8.8
+transmission: auto
+gears:
+  ratios: [4.15, 2.37, 1.56, 1.16, 0.86, 0.69]
+  final_drive: 3.80
+  tire: "205/55R16"
+  tire_circumference_m: 1.99
+art:
+  body: wagon
+paint: "#3a2a1a"
+notes: "Perfil genérico de perua/wagon. A silhueta vetorial cobre o teto longo e o pilar D."

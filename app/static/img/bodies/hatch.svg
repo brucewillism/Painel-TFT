@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 340" width="1000" height="340" aria-label="Hatch, vista lateral original">
+  <defs>
+    <linearGradient id="hatch-sheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff" stop-opacity="0.28"/>
+      <stop offset="35%" stop-color="#fff" stop-opacity="0.06"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.42"/>
+    </linearGradient>
+    <linearGradient id="hatch-glass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#9eb4c8" stop-opacity="0.55"/>
+      <stop offset="45%" stop-color="#2a3a4a" stop-opacity="0.72"/>
+      <stop offset="100%" stop-color="#0a1218" stop-opacity="0.92"/>
+    </linearGradient>
+    <linearGradient id="hatch-glow" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="var(--accent, #e10600)" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="var(--accent, #e10600)" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="hatch-rim" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#d8d8de"/>
+      <stop offset="100%" stop-color="#6a6a72"/>
+    </linearGradient>
+    <radialGradient id="hatch-tire" cx="50%" cy="45%" r="55%">
+      <stop offset="70%" stop-color="#1a1a1e"/>
+      <stop offset="100%" stop-color="#050506"/>
+    </radialGradient>
+    <clipPath id="hatch-bodyClip"><path d="M76,210 C68,194 84,166 120,156 C190,146 260,144 328,142 C358,142 390,120 420,100 C450,82 480,78 524,78 C610,76 700,84 760,104 C810,118 860,146 916,174 C944,186 960,202 954,222 L944,240 L865.0,240.0 A71.0,71.0 0 0 0 719.0,240.0 L273.0,240.0 A71.0,71.0 0 0 0 127.0,240.0 L104,240 C88,240 80,216 78,198 Z"/></clipPath>
+  </defs>
+  <ellipse class="underglow" cx="500" cy="300" rx="360" ry="18" fill="url(#hatch-glow)"/>
+  <ellipse cx="500" cy="304" rx="340" ry="11" fill="#000" opacity="0.45"/>
+
+  <g class="car-body">
+    <path class="paint" d="M76,210 C68,194 84,166 120,156 C190,146 260,144 328,142 C358,142 390,120 420,100 C450,82 480,78 524,78 C610,76 700,84 760,104 C810,118 860,146 916,174 C944,186 960,202 954,222 L944,240 L865.0,240.0 A71.0,71.0 0 0 0 719.0,240.0 L273.0,240.0 A71.0,71.0 0 0 0 127.0,240.0 L104,240 C88,240 80,216 78,198 Z" fill="var(--car-paint, #b1121a)" stroke="#140404" stroke-width="1.5" stroke-linejoin="round"/>
+    <path clip-path="url(#hatch-bodyClip)" d="M40,30 H960 V280 H40 Z" fill="url(#hatch-sheen)" opacity="0.95"/>
+
+    <path d="M80,214 L130,202 L210,202 L204,230 L98,232 Z" fill="#0c0c10" opacity="0.94"/>
+    <path d="M116,166 L186,160 L190,176 L120,180 Z" fill="#16161c"/>
+    <path class="paint greenhouse" d="M328,142 C358,142 390,120 420,100 C450,82 480,78 524,78 C610,76 700,84 760,104 C810,118 860,146 916,174 L896,168 C850,144 804,120 752,108 C690,92 610,84 534,84 C490,86 458,94 426,114 C392,132 358,142 334,142 Z"
+          fill="var(--car-paint, #b1121a)" stroke="#1a0808" stroke-width="0.7"/>
+    <path class="glass windshield" d="M338,142 C372,140 400,116 430,98 C456,84 488,80 524,80 L544,80 L544,146 L338,146 Z" fill="url(#hatch-glass)" stroke="#1a2028" stroke-width="1.15"/>
+    <path class="glass win-front" d="M558,80 L658,84 L658,140 L558,146 Z" fill="url(#hatch-glass)" stroke="#1a2028" stroke-width="1.1"/>
+    <path class="glass win-rear" d="M672,84 L748,98 L884,166 L672,140 Z" fill="url(#hatch-glass)" stroke="#1a2028" stroke-width="1.1"/>
+    <path class="glass rear-glass" d="M894,168 L938,182 L926,204 L890,194 Z" fill="url(#hatch-glass)" stroke="#1a2028" stroke-width="0.85"/>
+    <path d="M360,108 L430,84 L440,118 L376,132 Z" fill="#fff" opacity="0.13"/>
+    <path d="M544,78 L544,148" stroke="#1a0a0a" stroke-width="7.2"/>
+    <path d="M658,82 L658,142" stroke="#1a0a0a" stroke-width="6.2"/>
+    <path d="M748,96 L884,166" stroke="#1a0a0a" stroke-width="7.5"/>
+    <path d="M868,150 L916,174 L906,178 L862,156 Z" fill="var(--car-paint, #b1121a)" stroke="#1a0808" stroke-width="0.6"/>
+    <path d="M210,148 C360,140 600,134 880,166" fill="none" stroke="#fff" stroke-opacity="0.15" stroke-width="1.3"/>
+    <path d="M186,186 C360,170 640,166 880,190" fill="none" stroke="#000" stroke-opacity="0.28" stroke-width="1.25"/>
+    <path d="M544,148 L536,240" stroke="#000" stroke-opacity="0.38" stroke-width="1.3"/>
+    <path d="M658,142 L658,240" stroke="#000" stroke-opacity="0.38" stroke-width="1.3"/>
+    <rect x="592" y="160" width="22" height="5" rx="2" fill="#2a2a30"/>
+    <rect x="710" y="154" width="22" height="5" rx="2" fill="#2a2a30"/>
+    <path d="M348,134 L398,116 L408,136 L358,152 Z" fill="#16161a" stroke="#2a0a0a" stroke-width="0.8"/>
+    <path d="M384,120 L402,116 L406,132 L390,134 Z" fill="#9aa4b0" opacity="0.55"/>
+    <path d="M300,228 L720,228 L734,240 L286,240 Z" fill="#0a0a0c" opacity="0.85"/>
+    <path class="headlight" d="M90,176 L168,166 L172,180 L96,194 Z" fill="#e8eef8"/>
+    <path d="M94,178 L168,168 L170,174 L96,186 Z" fill="#fff" opacity="0.85"/>
+    <path class="headlight-beam" d="M90,176 L10,150 L10,210 L96,196 Z" fill="#fff5e0" opacity="0"/>
+    <path class="turn-fl" d="M110,184 L142,178 L142,190 L110,196 Z" fill="#ffb000" opacity="0"/>
+    <path class="taillight" d="M900,172 L948,186 L938,210 L888,196 Z" fill="#4a0000"/>
+    <path d="M904,176 L944,188 L940,196 L900,182 Z" fill="#ff3a3a" opacity="0.55"/>
+    <path class="brake-light" d="M902,174 L946,188 L936,206 L890,194 Z" fill="#ff1a1a" opacity="0"/>
+    <path class="turn-rl" d="M906,188 L934,198 L930,208 L904,198 Z" fill="#ffb000" opacity="0"/>
+
+  </g>
+
+  <g class="wheel wheel-front" transform="translate(200.0,248.0)">
+    <circle r="68.0" fill="url(#hatch-tire)"/>
+    <circle r="57.1" fill="#141418"/>
+    <circle r="54.4" fill="none" stroke="#7a7a84" stroke-width="2.0"/>
+    <circle r="47.6" fill="#26262e" stroke="url(#hatch-rim)" stroke-width="3.1"/>
+    <g class="spokes" fill="#d4d4dc" stroke="#8a8a94" stroke-width="0.35">
+      <path d="M0.00,-12.24 L-4.68,-46.41 L4.68,-46.41 Z"/><path d="M7.19,-9.90 L23.49,-40.30 L31.07,-34.80 Z"/><path d="M11.64,-3.78 L42.69,-18.79 L45.59,-9.89 Z"/><path d="M11.64,3.78 L45.59,9.89 L42.69,18.79 Z"/><path d="M7.19,9.90 L31.07,34.80 L23.49,40.30 Z"/><path d="M0.00,12.24 L4.68,46.41 L-4.68,46.41 Z"/><path d="M-7.19,9.90 L-23.49,40.30 L-31.07,34.80 Z"/><path d="M-11.64,3.78 L-42.69,18.79 L-45.59,9.89 Z"/><path d="M-11.64,-3.78 L-45.59,-9.89 L-42.69,-18.79 Z"/><path d="M-7.19,-9.90 L-31.07,-34.80 L-23.49,-40.30 Z"/>
+    </g>
+    <circle r="10.2" fill="#1a1a20" stroke="#d0d0d8" stroke-width="1.5"/>
+    <circle r="4.3" fill="#3a3a44"/>
+    <circle r="68.0" fill="none" stroke="#0a0a0c" stroke-width="1.1"/>
+  </g>
+  <g class="wheel wheel-rear" transform="translate(792.0,248.0)">
+    <circle r="68.0" fill="url(#hatch-tire)"/>
+    <circle r="57.1" fill="#141418"/>
+    <circle r="54.4" fill="none" stroke="#7a7a84" stroke-width="2.0"/>
+    <circle r="47.6" fill="#26262e" stroke="url(#hatch-rim)" stroke-width="3.1"/>
+    <g class="spokes" fill="#d4d4dc" stroke="#8a8a94" stroke-width="0.35">
+      <path d="M0.00,-12.24 L-4.68,-46.41 L4.68,-46.41 Z"/><path d="M7.19,-9.90 L23.49,-40.30 L31.07,-34.80 Z"/><path d="M11.64,-3.78 L42.69,-18.79 L45.59,-9.89 Z"/><path d="M11.64,3.78 L45.59,9.89 L42.69,18.79 Z"/><path d="M7.19,9.90 L31.07,34.80 L23.49,40.30 Z"/><path d="M0.00,12.24 L4.68,46.41 L-4.68,46.41 Z"/><path d="M-7.19,9.90 L-23.49,40.30 L-31.07,34.80 Z"/><path d="M-11.64,3.78 L-42.69,18.79 L-45.59,9.89 Z"/><path d="M-11.64,-3.78 L-45.59,-9.89 L-42.69,-18.79 Z"/><path d="M-7.19,-9.90 L-31.07,-34.80 L-23.49,-40.30 Z"/>
+    </g>
+    <circle r="10.2" fill="#1a1a20" stroke="#d0d0d8" stroke-width="1.5"/>
+    <circle r="4.3" fill="#3a3a44"/>
+    <circle r="68.0" fill="none" stroke="#0a0a0c" stroke-width="1.1"/>
+  </g>
+</svg>

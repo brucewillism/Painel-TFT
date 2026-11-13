@@ -1,0 +1,4 @@
+Orbitron — The Orbitron Project Authors (https://github.com/theleagueof/orbitron)
+Rajdhani — Indian Type Foundry
+Both licensed under the SIL Open Font License 1.1: https://scripts.sil.org/OFL
+Bundled here for offline use on the car dashboard (no network required).

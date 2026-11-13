@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#00D8FF">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Painel TFT">
+  <title>Painel TFT</title>
+  <link rel="manifest" href="/app/manifest.webmanifest">
+  <link rel="apple-touch-icon" href="/static/pwa/icon-192.png">
+  <link rel="stylesheet" href="/static/css/companion.css">
+</head>
+<body>
+  <div id="gate" class="gate">
+    <div class="brand">PAINEL TFT</div>
+    <p>Digite o PIN para alterar o tema e os ajustes. Quem só assiste o painel na rede não precisa dele.</p>
+    <input id="pin" type="password" inputmode="numeric" autocomplete="one-time-code" maxlength="8" placeholder="PIN">
+    <button class="primary" id="btn-pin">Entrar</button>
+    <p class="err" id="pin-err" hidden>PIN incorreto</p>
+  </div>
+
+  <main id="app" hidden>
+    <header>
+      <div class="brand" id="app-brand">PAINEL TFT</div>
+      <div class="sub" id="veh-line">—</div>
+    </header>
+
+    <section>
+      <h2>Visual</h2>
+      <label>Tema
+        <select id="theme">
+          <option value="hud">HUD Reator (padrão)</option>
+          <option value="classic">Clássico vermelho</option>
+        </select>
+      </label>
+      <div class="presets" id="presets"></div>
+      <label>Cor personalizada <input type="color" id="accent-hex" value="#00D8FF"></label>
+      <label class="toggle"><input type="checkbox" id="hud-rotate" checked> Rotação do carro 3D</label>
+    </section>
+
+    <section>
+      <h2>Aparência</h2>
+      <label>Brilho <span id="bright-val">80</span>%
+        <input type="range" id="bright" min="10" max="100" step="5" value="80">
+      </label>
+      <label>Modo noturno
+        <select id="night">
+          <option value="auto">Automático (18h–6h)</option>
+          <option value="sunset">Pôr do sol (GPS)</option>
+          <option value="on">Sempre ligado</option>
+          <option value="off">Sempre desligado</option>
+        </select>
+      </label>
+      <p class="hint" id="sun-hint"></p>
+      <label class="toggle"><input type="checkbox" id="perf"> Modo desempenho (menos glow no Pi 4)</label>
+    </section>
+
+    <section>
+      <h2>Cor do carro</h2>
+      <div class="presets" id="car-presets"></div>
+      <label>Pintura <input type="color" id="car-color" value="#b1121a"></label>
+    </section>
+
+    <section>
+      <h2>Medidores no Painel</h2>
+      <label class="toggle"><input type="checkbox" id="g-rpm" checked> RPM</label>
+      <label class="toggle"><input type="checkbox" id="g-temp" checked> Temperatura do motor</label>
+      <label class="toggle"><input type="checkbox" id="g-volt" checked> Bateria</label>
+      <label class="toggle"><input type="checkbox" id="g-cvt" checked> Relação da CVT</label>
+      <label class="toggle"><input type="checkbox" id="g-bars" checked> Barras (acelerador/carga/combustível)</label>
+    </section>
+
+    <section>
+      <h2>Combustível e autonomia</h2>
+      <div class="stat" id="range-stat">Autonomia: —</div>
+      <p class="hint" id="range-note"></p>
+      <button id="btn-fill">Marcar tanque cheio (50 L)</button>
+    </section>
+
+    <p class="hint foot">As mudanças vão ao painel na hora, pelo WebSocket. Instale este app na tela inicial do celular. O atalho do mapa e das rotas fica no próprio painel — não usamos o Waze.</p>
+  
+
+    <section>
+      <h2>Veículo</h2>
+      <p class="hint" id="veh-detect">Perfil ativo e VIN aparecem acima. Você pode trocar o perfil ou buscar uma foto do modelo.</p>
+      <label>Perfil
+        <select id="veh-profile"></select>
+      </label>
+      <label>Tipo de carroceria
+        <select id="veh-body">
+          <option value="sedan">Sedã</option>
+          <option value="hatch">Hatch</option>
+          <option value="suv">SUV</option>
+          <option value="pickup">Picape</option>
+          <option value="coupe">Cupê</option>
+          <option value="wagon">Perua / wagon</option>
+        </select>
+      </label>
+      <div class="presets" id="art-modes">
+        <button data-art="auto">Automático</button>
+        <button data-art="vector">Silhueta</button>
+        <button data-art="photo">Foto</button>
+        <button data-art="custom">Enviada</button>
+      </div>
+      <button id="btn-detect">Detectar VIN</button>
+      <button id="btn-photo-search">Buscar fotos do modelo</button>
+      <div id="photo-cands" class="photo-cands"></div>
+      <p class="hint" id="photo-attr"></p>
+      <label>Enviar arte (lado ou topo, PNG/SVG)
+        <input type="file" id="art-file" accept="image/png,image/svg+xml,image/jpeg">
+        <select id="art-view"><option value="side">Lateral</option><option value="top">Topo</option></select>
+      </label>
+      <p class="hint">Na foto, as zonas de farol/roda são estimadas; ajuste fino abaixo (valores em % da imagem).</p>
+      <div id="overlay-edits" hidden>
+        <label>Farol X <input type="range" id="ov-hl-x" min="0" max="100" value="5"></label>
+        <label>Farol Y <input type="range" id="ov-hl-y" min="0" max="100" value="42"></label>
+        <label>Lanterna X <input type="range" id="ov-tl-x" min="0" max="100" value="86"></label>
+        <label>Lanterna Y <input type="range" id="ov-tl-y" min="0" max="100" value="44"></label>
+        <button id="btn-ov-save">Salvar zonas</button>
+      </div>
+    </section>
+    <section>
+      <h2>LEDs ambiente</h2>
+      <div class="presets" id="led-modes">
+        <button data-mode="rpm">RPM</button>
+        <button data-mode="music">Música</button>
+        <button data-mode="alerts">Alertas</button>
+        <button data-mode="static">Cor fixa</button>
+        <button data-mode="off">Off</button>
+      </div>
+      <label>Cor <input type="color" id="led-color" value="#e10600"></label>
+      <label>Brilho <span id="led-bright-val">40</span>%
+        <input type="range" id="led-bright" min="0" max="100" value="40">
+      </label>
+    </section>
+    <section>
+      <h2>Valet</h2>
+      <p class="hint" id="valet-line">destravado</p>
+    </section>
+  </main>
+  <script src="/static/js/companion.js"></script>
+</body>
+</html>

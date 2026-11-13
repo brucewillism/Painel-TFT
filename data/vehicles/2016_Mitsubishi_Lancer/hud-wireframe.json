@@ -1,0 +1,19 @@
+{
+  "title": "HUD wireframe do Mitsubishi Lancer 2016",
+  "kind": "ai-illustration",
+  "note": "Ilustração holográfica gerada por IA a partir de uma foto do Wikimedia Commons. O PNG transparente usa o canal de maior intensidade como alfa (preto vira transparente; o brilho é preservado).",
+  "source_photo": {
+    "title": "File:2016 Mitsubishi Lancer (CF MY16) ES Sport sedan (2016-11-13) 01.jpg",
+    "url": "https://commons.wikimedia.org/wiki/File:2016_Mitsubishi_Lancer_(CF_MY16)_ES_Sport_sedan_(2016-11-13)_01.jpg",
+    "author": "EurovisionNim",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "date": "2016-11-13",
+    "location": "Burswood, Western Australia"
+  },
+  "size": {
+    "width": 1280,
+    "height": 720
+  },
+  "alpha": "max(R,G,B) with floor 8"
+}

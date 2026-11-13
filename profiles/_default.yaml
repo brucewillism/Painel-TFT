@@ -1,0 +1,67 @@
+# Perfil genérico — valores seguros quando o carro ainda não foi identificado.
+id: generic
+name: Veículo
+make: ""
+model: ""
+year_from: 2000
+year_to: 2035
+trim: ""
+body: sedan          # sedan | hatch | suv | pickup | coupe | wagon
+region: BR
+engine: ""
+fuel:
+  type: flex
+  flex_ethanol_percent: 27
+  tank_liters: 50
+  reserve_liters: 3
+  idle_l_per_min: 0.025
+  fallback_l100: 8.5
+  afr: null            # null = deriva do tipo (gasolina 14,7 / etanol 9,0 / flex mistura)
+transmission: auto     # cvt | manual | auto
+gear_source: inferred   # inferred | can | gpio
+drive: fwd             # fwd | rwd | awd | 4wd
+gears:
+  # relações de um automático 6 marchas genérico (só para estimativa de marcha)
+  ratios: [4.15, 2.37, 1.56, 1.16, 0.86, 0.69]
+  final_drive: 3.80
+  tire: "205/55R16"
+  tire_circumference_m: 1.99
+cvt:
+  fluid_temp_enabled: false
+  tcm_request_id: 0x7E1
+  tcm_response_id: 0x7E9
+  did: 0x2101
+  decode: a_minus_40
+  interval_s: 5
+  pulley_low: 2.4
+  pulley_high: 0.4
+  final_drive: 5.8
+shift:
+  enabled: true
+  redline: 6500
+  rpm_points: [4500, 5200, 5800, 6200]
+  mode: bar+beep
+  audio: true
+alerts:
+  coolant_temp_c: 105
+  voltage_low_v: 11.8
+  voltage_high_v: 15.2
+  rpm_high: 6200
+  cvt_temp_c: 120
+  range_km: 40
+maintenance:
+  - {id: oil, name: "Óleo do motor", interval_km: 10000, interval_days: 365}
+  - {id: engine_filter, name: "Filtro de óleo/ar", interval_km: 10000, interval_days: 365}
+  - {id: cabin_filter, name: "Filtro de cabine", interval_km: 15000, interval_days: 365}
+  - {id: tires, name: "Rodízio/pneus", interval_km: 10000, interval_days: 180}
+  - {id: brake_fluid, name: "Fluido de freio", interval_km: 40000, interval_days: 730}
+  - {id: spark, name: "Velas", interval_km: 40000, interval_days: 730}
+  - {id: trans_fluid, name: "Fluido do câmbio", interval_km: 40000, interval_days: 730}
+art:
+  body: sedan
+  mode: auto           # auto (foto se houver, senão vetor) | vector | photo | custom
+vin_hints:
+  wmi: []
+  years: []
+sample_vin: null
+paint: "#c41e3a"

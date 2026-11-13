@@ -1,0 +1,38 @@
+id: onix-2022-hatch
+name: Chevrolet Onix LT 2022
+make: Chevrolet
+model: Onix
+year_from: 2020
+year_to: 2026
+trim: LT
+body: hatch
+region: BR
+engine: "1.0 Turbo"
+fuel:
+  type: flex
+  tank_liters: 44
+  fallback_l100: 7.2
+transmission: auto
+gears:
+  ratios: [4.58, 2.96, 1.91, 1.45, 1.00, 0.75]
+  final_drive: 3.65
+  tire: "185/65R15"
+  tire_circumference_m: 1.93
+shift:
+  redline: 6500
+  rpm_points: [4800, 5400, 5900, 6300]
+maintenance:
+  - {id: oil, name: "Óleo do motor", interval_km: 10000, interval_days: 365}
+  - {id: trans_fluid, name: "Fluido do câmbio", interval_km: 40000, interval_days: 730}
+  - {id: engine_filter, name: "Filtro de óleo/ar", interval_km: 10000, interval_days: 365}
+  - {id: cabin_filter, name: "Filtro de cabine", interval_km: 15000, interval_days: 365}
+  - {id: tires, name: "Rodízio/pneus", interval_km: 10000, interval_days: 180}
+  - {id: brake_fluid, name: "Fluido de freio", interval_km: 40000, interval_days: 730}
+  - {id: spark, name: "Velas", interval_km: 40000, interval_days: 730}
+art:
+  body: hatch
+vin_hints:
+  wmi: ["9BG", "9GN", "3G1"]
+  years: [2020, 2021, 2022, 2023, 2024, 2025, 2026]
+paint: "#1c3a6e"
+notes: "Hatch flex, um dos mais vendidos no Brasil. Onix Plus (sedã) use o tipo sedan no assistente."

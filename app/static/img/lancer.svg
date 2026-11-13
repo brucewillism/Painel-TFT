@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 300" width="900" height="300" aria-label="Mitsubishi Lancer 2016 facelift, silhueta lateral original">
+  <defs>
+    <linearGradient id="paintSheen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#fff" stop-opacity="0.22"/>
+      <stop offset="40%" stop-color="#fff" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.38"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#6a2020" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#120405" stop-opacity="0.95"/>
+    </linearGradient>
+    <linearGradient id="glowRed" x1="0" y1="1" x2="0" y2="0">
+      <stop offset="0%" stop-color="var(--accent, #e10600)" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="var(--accent, #e10600)" stop-opacity="0"/>
+    </linearGradient>
+    <clipPath id="bodyClip">
+      <path d="M96,206
+               C86,196 84,176 102,164
+               L138,152 L176,148
+               L238,108 L318,86 L520,86 L610,112 L688,148
+               L778,154 C824,156 842,172 838,198
+               L820,214 L112,214 Z"/>
+    </clipPath>
+  </defs>
+
+  <ellipse class="underglow" cx="460" cy="262" rx="310" ry="16" fill="url(#glowRed)"/>
+  <ellipse cx="460" cy="264" rx="300" ry="10" fill="#000" opacity="0.5"/>
+
+  <!-- rocker / side skirt (2016, more sculpted) -->
+  <path d="M130,210 L176,196 L720,196 L800,212 L790,222 L140,222 Z" fill="#0a0a0c"/>
+
+  <!-- main body — nariz mais pontudo, capô longo, spoiler no porta-malas (facelift 2015/16) -->
+  <g class="car-body">
+    <path class="paint" d="M96,206
+             C86,196 84,176 102,164
+             L138,152 L176,148
+             L238,108 L318,86 L520,86 L610,112 L688,148
+             L778,154 C824,156 842,172 838,198
+             L820,214 L112,214
+             C104,214 98,210 96,206 Z"
+          fill="var(--car-paint, #b1121a)" stroke="#1a0505" stroke-width="1.4"/>
+    <path clip-path="url(#bodyClip)" d="M90,80 H850 V230 H90 Z" fill="url(#paintSheen)" opacity="0.9"/>
+
+    <!-- lower front splitter -->
+    <path d="M94,200 L118,186 L150,186 L148,206 L100,210 Z" fill="#0c0c0e" stroke="#2a0a0a" stroke-width="0.8"/>
+    <!-- upper grille slot (faixa fina do facelift) -->
+    <path d="M108,170 L150,162 L152,172 L112,178 Z" fill="#111" stroke="#3a1010" stroke-width="0.6"/>
+
+    <!-- cabin / C-pillar grosso, teto levemente arqueado, antena shark -->
+    <path class="paint" d="M238,108 L322,70 L545,70 L632,112 L610,112 L520,86 L318,86 Z"
+          fill="var(--car-paint, #b1121a)" stroke="#2a0a0a" stroke-width="1"/>
+    <path d="M252,108 L326,76 L536,76 L622,110 L600,110 L518,90 L328,90 Z" fill="url(#glass)"/>
+    <!-- montantes -->
+    <path d="M368,76 L368,110 M455,76 L455,110 M545,76 L568,110" stroke="#140505" stroke-width="3.2" fill="none"/>
+    <!-- shark fin -->
+    <path d="M560,70 L572,70 L568,58 Z" fill="#1a1a1c" stroke="#2a0a0a" stroke-width="0.6"/>
+
+    <!-- belt / character line (sobe no para-lama traseiro) -->
+    <path d="M170,150 L238,108 L632,112 L778,154" fill="none" stroke="#fff" stroke-opacity="0.18" stroke-width="1.4"/>
+    <path d="M176,176 C280,168 520,166 700,176 L760,190" fill="none" stroke="#000" stroke-opacity="0.35" stroke-width="1"/>
+
+    <!-- door cuts -->
+    <path d="M356,112 L356,210 M500,114 L500,210" fill="none" stroke="#000" stroke-opacity="0.35" stroke-width="1.1"/>
+    <!-- handles -->
+    <rect x="400" y="132" width="22" height="5" rx="1.5" fill="#2a2a2e"/>
+    <rect x="540" y="134" width="22" height="5" rx="1.5" fill="#2a2a2e"/>
+
+    <!-- side vent crease behind front wheel (marca do CY facelift) -->
+    <path d="M292,168 L318,162 L322,178 L296,182 Z" fill="#000" opacity="0.35"/>
+
+    <!-- mirror -->
+    <path d="M300,118 L328,112 L334,124 L308,130 Z" fill="#161618" stroke="#2a0a0a" stroke-width="0.7"/>
+
+    <!-- rear spoiler lip -->
+    <path d="M688,148 L778,152 L776,146 L700,140 Z" fill="#0e0e10"/>
+
+    <!-- taillight (facelift: mais baixo e alongado, “L” deitado) -->
+    <path class="taillight" d="M780,158 L832,162 L828,180 L776,176 Z" fill="#3a0000"/>
+    <path class="brake-light" d="M782,160 L828,164 L826,176 L780,172 Z" fill="#ff1a1a" opacity="0"/>
+
+    <!-- headlight alongado do facelift + DRL em faixa -->
+    <path class="headlight" d="M116,164 L176,150 L180,168 L122,178 Z" fill="#3a3a42"/>
+    <path d="M120,166 L174,153 L176,158 L122,170 Z" fill="#d8dce8" opacity="0.7"/>
+    <path class="headlight-beam" d="M116,166 L18,148 L18,196 L118,180 Z" fill="#fff5e0" opacity="0"/>
+    <path class="turn-fl" d="M132,176 L154,168 L154,180 L132,184 Z" fill="#ffb000" opacity="0"/>
+    <path class="turn-rl" d="M790,176 L824,178 L822,188 L788,186 Z" fill="#ffb000" opacity="0"/>
+  </g>
+
+  <!-- wheels 18" look, 10 paletas -->
+  <g class="wheel wheel-front" transform="translate(240,228)">
+    <circle r="46" fill="#111" stroke="#2a2a2a" stroke-width="2"/>
+    <circle r="33" fill="#1a1a1e" stroke="#444" stroke-width="2"/>
+    <g class="spokes">
+      <g stroke="#c8c8ce" stroke-width="2.2" fill="none">
+        <path d="M0,-28 L0,28 M-28,0 L28,0 M-20,-20 L20,20 M-20,20 L20,-20 M-11,-26 L11,26 M11,-26 L-11,26 M-26,-11 L26,11 M-26,11 L26,-11"/>
+      </g>
+      <circle r="8" fill="#2a2a30" stroke="#888" stroke-width="1.2"/>
+    </g>
+    <circle r="46" fill="none" stroke="#222" stroke-width="1"/>
+  </g>
+  <g class="wheel wheel-rear" transform="translate(690,228)">
+    <circle r="46" fill="#111" stroke="#2a2a2a" stroke-width="2"/>
+    <circle r="33" fill="#1a1a1e" stroke="#444" stroke-width="2"/>
+    <g class="spokes">
+      <g stroke="#c8c8ce" stroke-width="2.2" fill="none">
+        <path d="M0,-28 L0,28 M-28,0 L28,0 M-20,-20 L20,20 M-20,20 L20,-20 M-11,-26 L11,26 M11,-26 L-11,26 M-26,-11 L26,11 M-26,11 L26,-11"/>
+      </g>
+      <circle r="8" fill="#2a2a30" stroke="#888" stroke-width="1.2"/>
+    </g>
+    <circle r="46" fill="none" stroke="#222" stroke-width="1"/>
+  </g>
+</svg>

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Painel TFT
+Comment=Abre o painel TFT em tela cheia
+Exec=__ROOT__/scripts/kiosk.sh
+X-GNOME-Autostart-enabled=true
+Terminal=false

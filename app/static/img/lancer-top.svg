@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 480" width="220" height="480" aria-label="Lancer 2016, vista de cima original">
+  <defs>
+    <linearGradient id="topSheen" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#000" stop-opacity="0.25"/>
+      <stop offset="45%" stop-color="#fff" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.3"/>
+    </linearGradient>
+  </defs>
+  <!-- body outline, nariz em V do facelift, traseira um pouco mais larga nos ombros -->
+  <path class="paint" d="M70,48
+           C60,52 50,70 48,100
+           L44,160 L42,230 L44,310
+           L50,380 C54,410 70,430 110,438
+           C150,430 166,410 170,380
+           L176,310 L178,230 L176,160
+           L172,100 C170,70 160,52 150,48
+           C140,36 80,36 70,48 Z"
+        fill="var(--car-paint, #b1121a)" stroke="#1a0505" stroke-width="1.3"/>
+  <path d="M70,48 C60,52 50,70 48,100 L44,160 L42,230 L44,310 L50,380 C54,410 70,430 110,438 C150,430 166,410 170,380 L176,310 L178,230 L176,160 L172,100 C170,70 160,52 150,48 C140,36 80,36 70,48 Z" fill="url(#topSheen)"/>
+
+  <!-- windshield + roof + rear glass -->
+  <path d="M62,150 L158,150 L150,248 L70,248 Z" fill="#2a1010" stroke="#3a1515" stroke-width="0.8" opacity="0.85"/>
+  <path d="M70,250 L150,250 L144,330 L76,330 Z" fill="#1a0a0a" opacity="0.7"/>
+  <path d="M76,332 L144,332 L138,372 L82,372 Z" fill="#2a1010" opacity="0.8"/>
+
+  <!-- grille V / Dynamic Shield hint (sem logotipo) -->
+  <path d="M88,52 L110,70 L132,52" fill="none" stroke="#111" stroke-width="2"/>
+  <path d="M94,58 L110,72 L126,58" fill="#111" opacity="0.8"/>
+
+  <g id="zone-engine" class="zone zone-engine">
+    <rect x="70" y="80" width="80" height="56" rx="4" fill="#e10600" fill-opacity="0.12" stroke="#e10600" stroke-opacity="0.4"/>
+  </g>
+  <g id="zone-battery" class="zone zone-battery">
+    <rect x="78" y="92" width="22" height="16" rx="2" fill="#e10600" fill-opacity="0.12" stroke="#e10600" stroke-opacity="0.4"/>
+  </g>
+  <g id="zone-cvt" class="zone zone-cvt">
+    <rect x="90" y="200" width="40" height="28" rx="3" fill="#e10600" fill-opacity="0.12" stroke="#e10600" stroke-opacity="0.4"/>
+  </g>
+
+  <rect class="headlight-t" x="52" y="56" width="22" height="10" rx="2" fill="#c8cce0"/>
+  <rect class="headlight-t" x="146" y="56" width="22" height="10" rx="2" fill="#c8cce0"/>
+  <rect class="taillight-t" x="60" y="412" width="24" height="10" rx="2" fill="#3a0000"/>
+  <rect class="taillight-t" x="136" y="412" width="24" height="10" rx="2" fill="#3a0000"/>
+  <rect class="turn-tl" x="48" y="68" width="12" height="8" rx="1" fill="#ffb000" opacity="0"/>
+  <rect class="turn-tr" x="160" y="68" width="12" height="8" rx="1" fill="#ffb000" opacity="0"/>
+
+  <!-- mirrors -->
+  <rect x="30" y="148" width="16" height="8" rx="2" fill="#161618"/>
+  <rect x="174" y="148" width="16" height="8" rx="2" fill="#161618"/>
+
+  <!-- wheels (arches) -->
+  <rect x="36" y="100" width="10" height="36" rx="3" fill="#111"/>
+  <rect x="174" y="100" width="10" height="36" rx="3" fill="#111"/>
+  <rect x="36" y="300" width="10" height="36" rx="3" fill="#111"/>
+  <rect x="174" y="300" width="10" height="36" rx="3" fill="#111"/>
+</svg>

@@ -1,0 +1,234 @@
+/* Home, Carro, Câmeras, Mídia, Telefone, Rádio, CarPlay — 800×480, leve no Pi 4 */
+
+/* —— Início (launcher) —— */
+#page-home { display: flex; flex-direction: column; padding: 8px 12px; }
+.home-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.home-clock { font-family: "Orbitron", sans-serif; font-size: 28px; font-weight: 900; letter-spacing: 0.06em; }
+.home-now { font-size: 12px; color: var(--muted); max-width: 50%; text-align: right; }
+.home-now strong { color: var(--accent-hi); }
+.home-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 8px;
+  min-height: 0;
+}
+.tile {
+  background: linear-gradient(180deg, #1a0a0a, #0c0505);
+  border: 1px solid var(--stroke);
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 6px; cursor: pointer; color: var(--text);
+  font-family: "Orbitron", sans-serif; font-size: 11px; letter-spacing: 0.1em; font-weight: 700;
+}
+.tile:active { transform: scale(0.97); }
+.tile .ico { font-size: 28px; color: var(--accent-hi); line-height: 1; text-shadow: var(--glow); }
+body.perf .tile .ico { text-shadow: none; }
+.tile.tile-carplay .ico { font-size: 22px; }
+
+/* —— Carro —— */
+#page-car { display: grid; grid-template-columns: 1fr 200px; grid-template-rows: 1fr auto; gap: 6px; padding: 4px 8px; }
+.car-stage {
+  grid-row: 1; grid-column: 1;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden; min-height: 0;
+  transform-origin: 50% 70%;
+  transition: transform 0.35s ease-out;
+}
+.car-stage svg { width: 100%; height: 100%; max-height: 260px; }
+.car-stage.tilt-fwd { transform: rotate(-2.2deg); }
+.car-stage.tilt-back { transform: rotate(2.2deg); }
+body.perf .car-stage { transition: none; }
+.car-top { grid-row: 1; grid-column: 2; display: flex; align-items: center; justify-content: center; }
+.car-top svg { width: 160px; height: 100%; max-height: 260px; }
+.car-alerts { grid-column: 1 / -1; display: flex; gap: 8px; flex-wrap: wrap; min-height: 36px; align-items: center; }
+.car-alerts .tag {
+  font-family: "Orbitron", sans-serif; font-size: 10px; letter-spacing: 0.08em;
+  padding: 4px 8px; border: 1px solid var(--stroke); color: var(--muted);
+}
+.car-alerts .tag.on { color: #fff; background: var(--accent); border-color: var(--accent-hi); }
+
+/* SVG animation hooks */
+#intro .intro-car { width: 420px; max-height: 150px; margin: 6px auto 0; }
+#intro .intro-car svg { width: 100%; height: 150px; }
+.wheel .spokes { transform-origin: 0 0; transform-box: fill-box; }
+.car-moving .wheel .spokes { animation: wheelSpin linear infinite; }
+@keyframes wheelSpin { to { transform: rotate(360deg); } }
+body.perf .car-moving .wheel .spokes { animation: none; }
+.lights-on .headlight, .lights-on .headlight-t { fill: #fff4d0 !important; filter: none; }
+.lights-on .headlight-beam { opacity: 0.35 !important; }
+body.perf .lights-on .headlight-beam { opacity: 0.2 !important; }
+.brake-on .brake-light, .brake-on .taillight, .brake-on .taillight-t { fill: #ff1a1a !important; opacity: 1 !important; }
+.turn-left .turn-fl, .turn-left .turn-rl, .turn-left .turn-tl { animation: blink 0.45s steps(2) infinite; opacity: 1; }
+.turn-right .turn-fr, .turn-right .turn-rr, .turn-right .turn-tr { animation: blink 0.45s steps(2) infinite; opacity: 1; }
+@keyframes blink { 50% { opacity: 0; } }
+body.perf .turn-left .turn-fl, body.perf .turn-left .turn-rl, body.perf .turn-right .turn-tr { animation: none; opacity: 1; }
+.underglow { opacity: 0.7; }
+body.perf .underglow { opacity: 0; }
+.zone.hot { fill-opacity: 0.45 !important; stroke-opacity: 1 !important; animation: zonePulse 0.8s ease-in-out infinite; }
+body.perf .zone.hot { animation: none; fill-opacity: 0.55 !important; }
+@keyframes zonePulse { 50% { fill-opacity: 0.15; } }
+
+/* —— Câmeras —— */
+#page-cameras { display: flex; flex-direction: column; padding: 4px 8px; }
+.cam-toolbar { display: flex; gap: 6px; align-items: center; margin-bottom: 4px; }
+.cam-toolbar .btn { padding: 5px 10px; font-size: 10px; }
+.cam-toolbar .rev { margin-left: auto; font-family: "Orbitron", sans-serif; font-size: 10px; letter-spacing: 0.1em; color: var(--muted); }
+.cam-toolbar .rev.on { color: #fff; background: var(--accent); padding: 4px 8px; }
+.cam-grid { flex: 1; display: grid; gap: 4px; min-height: 0; }
+.cam-grid.grid-4 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+.cam-grid.grid-1 { grid-template-columns: 1fr; grid-template-rows: 1fr; }
+.cam-cell { position: relative; background: #100; overflow: hidden; border: 1px solid var(--stroke); min-height: 0; }
+.cam-cell img { width: 100%; height: 100%; object-fit: cover; background: #000; }
+.cam-cell .lbl {
+  position: absolute; left: 6px; top: 6px;
+  font-family: "Orbitron", sans-serif; font-size: 10px; letter-spacing: 0.1em;
+  background: rgba(0,0,0,0.6); padding: 2px 6px; color: var(--accent-hi);
+}
+
+/* —— Mídia —— */
+#page-media { display: grid; grid-template-columns: 280px 1fr; gap: 8px; padding: 6px 8px; }
+.media-now { display: flex; flex-direction: column; gap: 6px; }
+.cover {
+  width: 100%; aspect-ratio: 1; max-height: 160px;
+  background: linear-gradient(160deg, #3a0000, #100); border: 1px solid var(--stroke);
+  display: flex; align-items: center; justify-content: center;
+  font-family: "Orbitron", sans-serif; font-size: 42px; color: var(--accent);
+}
+.cover img { width: 100%; height: 100%; object-fit: cover; }
+.now-title { font-family: "Orbitron", sans-serif; font-size: 14px; font-weight: 900; }
+.now-artist { color: var(--muted); font-size: 12px; }
+.transport { display: flex; gap: 6px; }
+.vol { display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); }
+.vol input, .eq input { width: 100%; accent-color: var(--accent); }
+.eq { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-top: 4px; }
+.eq label { display: flex; flex-direction: column; align-items: center; font-size: 8px; letter-spacing: 0.04em; color: var(--muted); font-family: "Orbitron", sans-serif; }
+.eq input[type=range] { writing-mode: vertical-lr; direction: rtl; height: 64px; width: 18px; }
+.media-list { overflow-y: auto; min-height: 0; }
+.media-tabs { display: flex; gap: 4px; margin-bottom: 6px; }
+.src-btn { font-size: 10px; padding: 4px 8px; }
+.src-btn.on { background: var(--accent); color: #fff; }
+.track-row, .radio-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 6px 8px; border-bottom: 1px solid #1a0808; cursor: pointer; font-size: 13px;
+}
+.track-row:active, .radio-row:active { background: #2a0a0a; }
+.track-row .sub { color: var(--muted); font-size: 11px; }
+
+/* —— Telefone —— */
+#page-phone { display: grid; grid-template-columns: 240px 1fr 1fr; gap: 8px; padding: 6px 8px; }
+.keypad { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; }
+.key { height: 36px; font-family: "Orbitron", sans-serif; font-size: 16px; }
+.phone-number { font-family: "Orbitron", sans-serif; font-size: 18px; letter-spacing: 0.08em; min-height: 28px; margin-bottom: 6px; }
+.contact, .clog {
+  padding: 6px 8px; border-bottom: 1px solid #1a0808; cursor: pointer; font-size: 13px;
+}
+.clog .dir { font-family: "Orbitron", sans-serif; font-size: 9px; color: var(--muted); letter-spacing: 0.08em; }
+
+/* chamada recebida */
+.call-overlay {
+  position: fixed; inset: 0; z-index: 2500;
+  background: rgba(0,0,0,0.82);
+  display: flex; align-items: center; justify-content: center;
+}
+.call-overlay[hidden] { display: none; }
+.call-card { width: 380px; text-align: center; padding: 22px; }
+.call-card h2 { font-family: "Orbitron", sans-serif; font-size: 16px; letter-spacing: 0.16em; color: var(--accent-hi); margin-bottom: 8px; }
+.call-card .who { font-family: "Orbitron", sans-serif; font-size: 26px; font-weight: 900; }
+.call-card .num { color: var(--muted); margin: 4px 0 16px; }
+.call-actions { display: flex; justify-content: center; gap: 12px; }
+
+/* —— Rádio —— */
+#page-radio { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 8px; }
+.fm-dial { text-align: center; }
+.fm-mhz { font-family: "Orbitron", sans-serif; font-size: 56px; font-weight: 900; letter-spacing: 0.04em; }
+.fm-mhz span { font-size: 16px; color: var(--muted); }
+.fm-name { color: var(--accent-hi); letter-spacing: 0.14em; font-family: "Orbitron", sans-serif; font-size: 12px; margin-bottom: 8px; }
+.fm-slider { width: 90%; accent-color: var(--accent); }
+.fm-hint { font-size: 10px; color: var(--muted); margin-top: 8px; line-height: 1.3; }
+
+/* —— CarPlay —— */
+body.mode-carplay .shift-bar, body.mode-carplay .topbar, body.mode-carplay .tabbar { display: none; }
+body.mode-carplay .pages { height: 480px; }
+#page-carplay { padding: 0; background: #050506; }
+.cp-shell { height: 100%; display: flex; flex-direction: column; }
+.cp-bar { height: 36px; display: flex; align-items: center; gap: 10px; padding: 0 10px; border-bottom: 1px solid var(--stroke); }
+.cp-grid { flex: 1; display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); gap: 10px; padding: 16px; }
+.cp-app {
+  background: #140808; border: 1px solid var(--stroke);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 8px; font-family: "Orbitron", sans-serif; font-size: 11px; letter-spacing: 0.1em;
+}
+.cp-app .ico { font-size: 28px; color: var(--accent-hi); }
+.cp-banner { padding: 0 16px 12px; font-size: 11px; color: var(--muted); line-height: 1.35; }
+.cp-banner strong { color: var(--accent-hi); }
+
+/* Ícones SVG do lançador — não usam a fonte do tile */
+.tile .ico, .tile svg.ico {
+  width: 28px; height: 28px;
+  color: var(--accent-hi);
+  fill: none;
+  display: block;
+  filter: none;
+  font-size: 0;
+  text-shadow: none;
+}
+body.perf .tile .ico { filter: none; text-shadow: none; }
+
+/* Pintura do carro (app / Ajustes) */
+.car-stage svg, .car-top svg, #intro-car svg { color: var(--car-paint, #b1121a); }
+.paint { fill: var(--car-paint, #b1121a); }
+
+/* layout do Painel: esconder medidores pelo app */
+#page-gauges.hide-rpm .gauge-col { display: none; }
+#page-gauges.hide-side .side-col { display: none; }
+#page-gauges.hide-rpm .gauges-layout { grid-template-columns: 1fr 128px; }
+#page-gauges.hide-side .gauges-layout { grid-template-columns: 210px 1fr; }
+#page-gauges.hide-rpm.hide-side .gauges-layout { grid-template-columns: 1fr; }
+#page-gauges.hide-cvt #cvt-block, #page-gauges.hide-cvt #gear-badge { display: none !important; }
+#page-gauges.hide-bars .bars { display: none; }
+
+/* VIN no Carro */
+#page-car {
+  grid-template-columns: 1fr 200px;
+  grid-template-rows: 1fr auto auto;
+}
+.car-vin {
+  grid-column: 1 / -1;
+  display: flex; flex-wrap: wrap; gap: 8px 16px;
+  align-items: baseline;
+  font-size: 11px; color: var(--muted);
+  padding: 2px 4px 0;
+}
+.car-vin .vin-label { font-family: "Orbitron", sans-serif; letter-spacing: 0.1em; color: var(--accent-hi); font-size: 10px; }
+.car-vin .vin-code { font-family: "Orbitron", sans-serif; letter-spacing: 0.12em; color: var(--text); font-size: 12px; }
+.car-vin .vin-src { margin-left: auto; }
+
+/* Postos / autonomia no mapa */
+.range-chip {
+  display: flex; align-items: center; gap: 8px;
+  margin-top: 6px; font-size: 11px;
+}
+.range-chip .km { font-family: "Orbitron", sans-serif; font-size: 16px; color: var(--accent-hi); }
+.range-chip .note { color: var(--muted); font-size: 10px; line-height: 1.3; max-width: 220px; }
+.range-panel {
+  position: absolute; right: 8px; top: 8px; bottom: 8px;
+  width: 236px; overflow: auto; z-index: 500;
+  padding: 8px; pointer-events: auto;
+  clip-path: none;
+  background: rgba(7, 6, 6, 0.92);
+}
+.range-panel[hidden] { display: none; }
+.st-row {
+  display: block; width: 100%; text-align: left;
+  padding: 7px 8px; margin: 0 0 6px; border: 1px solid var(--stroke);
+  background: #140808; color: var(--text); cursor: pointer;
+}
+.st-row .nm { font-family: "Orbitron", sans-serif; font-size: 10px; letter-spacing: 0.06em; }
+.st-row .meta { font-size: 11px; color: var(--muted); }
+.badge { display: inline-block; font-family: "Orbitron", sans-serif; font-size: 8px; letter-spacing: 0.08em; padding: 1px 5px; margin-left: 4px; }
+.badge.reachable { background: #1a3a1a; color: #8f8; }
+.badge.at-risk { background: #3a2a00; color: #fc6; }
+.badge.unreachable { background: #3a1010; color: #f88; }
+/* badges de alcance ficam semânticos (verde/âmbar/vermelho), mesmo no tema vermelho */

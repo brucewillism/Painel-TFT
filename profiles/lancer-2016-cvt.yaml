@@ -1,0 +1,71 @@
+id: lancer-2016-cvt
+name: Mitsubishi Lancer HL 2016
+make: Mitsubishi
+model: Lancer
+year_from: 2015
+year_to: 2018
+trim: HL
+body: sedan
+region: BR
+engine: "2.0"
+fuel:
+  type: flex
+  flex_ethanol_percent: 27
+  tank_liters: 50
+  reserve_liters: 3
+  fallback_l100: 9.5
+transmission: cvt
+gear_source: inferred   # inferred | can | gpio
+drive: fwd             # fwd | rwd | awd | 4wd
+gears:
+  # Usado só se transmission: manual. Lancer 2.0 (4B11) 5 marchas.
+  ratios: [3.538, 1.913, 1.218, 0.888, 0.687]
+  final_drive: 4.235
+  tire: "215/45R18"
+  tire_circumference_m: 2.025
+cvt:
+  # Jatco JF011E / F1CJA — temp. do fluido via Mode 22 (experimental)
+  fluid_temp_enabled: false
+  tcm_request_id: 0x7E1
+  tcm_response_id: 0x7E9
+  did: 0x2101
+  decode: a_minus_40
+  interval_s: 5
+  pulley_low: 2.349
+  pulley_high: 0.394
+  final_drive: 6.386
+shift:
+  redline: 6500
+  rpm_points: [4500, 5200, 5800, 6200]
+maintenance:
+  - {id: oil, name: "Óleo do motor", interval_km: 10000, interval_days: 365}
+  - {id: cvt, name: "Fluido do CVT", interval_km: 40000, interval_days: 730}
+  - {id: engine_filter, name: "Filtro de óleo/ar", interval_km: 10000, interval_days: 365}
+  - {id: cabin_filter, name: "Filtro de cabine", interval_km: 15000, interval_days: 365}
+  - {id: tires, name: "Rodízio/pneus", interval_km: 10000, interval_days: 180}
+  - {id: brake_fluid, name: "Fluido de freio", interval_km: 40000, interval_days: 730}
+  - {id: spark, name: "Velas", interval_km: 40000, interval_days: 730}
+# Herói 2D do HUD (ilustração wireframe do Lancer 2016). Quando definido,
+# o painel usa a imagem no lugar do modelo 3D genérico. Âncoras 0–1 na
+# ilustração 1280×720 (origem no canto superior esquerdo).
+hud_hero:
+  image: data/vehicles/2016_Mitsubishi_Lancer/hud-wireframe.png
+  luma: data/vehicles/2016_Mitsubishi_Lancer/hud-wireframe-luma.png
+  core: data/vehicles/2016_Mitsubishi_Lancer/hud-wireframe-core.png
+  ground: 0.845
+  aspect: 1.7778
+  anchors:
+    motor:    {x: 0.29, y: 0.43}   # capô / motor
+    cvt:      {x: 0.66, y: 0.68}   # meio do assoalho (CVT)
+    battery:  {x: 0.42, y: 0.50}   # para-lama dianteiro
+    wheels:   {x: 0.50, y: 0.72}   # roda dianteira (lado da câmera)
+
+art:
+  body: sedan
+vin_hints:
+  wmi: ["93Y", "93X", "93Z", "JA3", "JA4", "JMB", "4A3"]
+  years: [2015, 2016, 2017, 2018]
+  vds_prefix: []
+sample_vin: "93YAA26CXGC123456"
+paint: "#b1121a"
+notes: "Lancer HL 2016 brasileiro, CVT Jatco. Perfil de exemplo (o painel serve para qualquer carro)."

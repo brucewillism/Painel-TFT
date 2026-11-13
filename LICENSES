@@ -1,0 +1,83 @@
+# Créditos e licenças de terceiros — Painel TFT
+
+Este arquivo lista o material de terceiros empacotado no projeto. A licença
+do próprio Painel TFT está em LICENSE (MIT).
+
+
+## Ilustração HUD do Mitsubishi Lancer 2016 (herói 2D)
+
+- Arquivos no projeto:
+  - `data/vehicles/2016_Mitsubishi_Lancer/hud-wireframe.png` (cor + alfa)
+  - `data/vehicles/2016_Mitsubishi_Lancer/hud-wireframe-luma.png` (intensidade / máscara de luminância)
+  - `data/vehicles/2016_Mitsubishi_Lancer/hud-wireframe-core.png` (linhas claras, máscara do núcleo branco)
+  - `data/vehicles/2016_Mitsubishi_Lancer/hud-wireframe.json` (créditos)
+- Tipo: ilustração holográfica em wireframe **gerada por IA**, usada só no perfil
+  `lancer-2016-cvt` (o HUD recolorida o desenho com a cor de destaque).
+- Foto de origem (Wikimedia Commons):
+  *File:2016 Mitsubishi Lancer (CF MY16) ES Sport sedan (2016-11-13) 01.jpg*
+  - Autor: EurovisionNim
+  - Data: 13 de novembro de 2016, Burswood, Western Australia
+  - Licença da foto: Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+    https://creativecommons.org/licenses/by-sa/4.0/
+  - Página: https://commons.wikimedia.org/wiki/File:2016_Mitsubishi_Lancer_(CF_MY16)_ES_Sport_sedan_(2016-11-13)_01.jpg
+- Como a ilustração deriva dessa foto, ela é distribuída nos mesmos termos
+  da CC BY-SA 4.0: atribua EurovisionNim (foto) e o Painel TFT (ilustração
+  gerada por IA) e compartilhe adaptações sob a mesma licença.
+- O PNG transparente não usa remoção de fundo (rembg): o canal alfa é a
+  intensidade máxima RGB da ilustração (preto vira transparente; o brilho
+  das linhas é preservado).
+
+
+## Innerscene — sedã em escala real (HUD, tipo sedan)
+
+- Autor: Innerscene Corp (https://www.innerscene.com)
+- Modelo: Sedan car (`sedan-original.glb`)
+- Fonte: https://www.innerscene.com/tools/library/3d-parts/sedan-car-42109739
+- Licença: CC0 1.0 Universal (domínio público)
+  https://creativecommons.org/publicdomain/zero/1.0/
+- Arquivo no projeto: `app/static/models/innerscene/sedan.glb`
+- Uso: carroceria `sedan` genérica no HUD 3D (outros perfis). O perfil do Lancer 2016 usa a ilustração 2D acima. O modelo vem em
+  metros, com carroceria, vidros, faróis, lanternas e rodas separados; o
+  HUD troca os materiais por wireframe técnico.
+
+A atribuição não é exigida pela CC0, mas é apreciada.
+
+## Kenney Car Kit — modelos 3D do HUD
+
+- Autor: Kenney (www.kenney.nl)
+- Pacote: Car Kit — https://kenney.nl/assets/car-kit
+- Licença: CC0 1.0 Universal (domínio público)
+  https://creativecommons.org/publicdomain/zero/1.0/
+- Arquivos no projeto: `app/static/models/kenney-car/`
+  - sedan.glb          (incluído; o tipo `sedan` do HUD usa o modelo Innerscene acima)
+  - hatchback-sports.glb → `hatch`
+  - suv.glb            → `suv`
+  - truck.glb          → `pickup`
+  - sedan-sports.glb   → `coupe`
+  - van.glb            → `wagon` (o kit não inclui perua; a van é o mais próximo)
+  - Textures/colormap.png (textura original do kit; o HUD troca os materiais
+    por um preenchimento escuro translúcido e linhas wireframe)
+
+A atribuição não é exigida pela CC0, mas é apreciada. Os modelos são
+usados offline, sem alteração da malha, apenas com materiais e escala
+ajustados para o painel.
+
+Texto da CC0 1.0 (resumo): o autor cede o trabalho ao domínio público,
+abrindo mão de todos os direitos autorais na medida permitida pela lei.
+Você pode copiar, modificar, distribuir e usar o trabalho, inclusive para
+fins comerciais, sem pedir permissão.
+
+## three.js
+
+- Autor: mrdoob / contribuidores three.js (https://threejs.org)
+- Versão empacotada: r152 (`app/static/vendor/three.min.js`)
+- Licença: MIT — ver `app/static/vendor/THREE_LICENSE.txt`
+
+## Leaflet
+
+- Licença: BSD-2-Clause — ver os cabeçalhos em
+  `app/static/vendor/leaflet.js`
+
+## Fontes Orbitron e Rajdhani
+
+- Licença: SIL Open Font License 1.1 — em `app/static/fonts/`

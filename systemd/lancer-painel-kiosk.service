@@ -1,0 +1,17 @@
+[Unit]
+Description=Kiosk Chromium do Painel TFT
+After=lancer-painel.service graphical.target
+Requires=lancer-painel.service
+# Use somente se o Pi iniciar direto num usuário gráfico (lightdm/wayland).
+
+[Service]
+Type=simple
+User=__USER__
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/__USER__/.Xauthority
+ExecStart=__ROOT__/scripts/kiosk.sh
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical.target

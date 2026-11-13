@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=800, height=480, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title>Painel TFT</title>
+  <link rel="stylesheet" href="/static/vendor/leaflet.css">
+  <link rel="stylesheet" href="/static/css/app.css">
+  <link rel="stylesheet" href="/static/css/headunit.css">
+  <link rel="stylesheet" href="/static/css/extras.css">
+  <link rel="stylesheet" href="/static/css/hud.css">
+</head>
+<body class="theme-hud" data-theme="hud" data-accent="arc">
+  <div id="intro" class="intro" hidden>
+    <div class="intro-frame">
+      <div class="intro-kicker">PAINEL TFT</div>
+      <div class="intro-title" id="intro-title">PAINEL TFT</div>
+      <div class="intro-sub">2016&nbsp;&nbsp;·&nbsp;&nbsp;<span id="intro-trans">CVT</span></div>
+      <div class="intro-line"><span></span></div>
+      <div class="intro-car" id="intro-car"></div>
+    </div>
+  </div>
+
+  <div class="call-overlay" id="call-overlay" hidden>
+    <div class="call-card hud-panel">
+      <h2 id="call-state">CHAMADA</h2>
+      <div class="who" id="call-who">—</div>
+      <div class="num" id="call-num">—</div>
+      <div class="call-actions">
+        <button class="btn primary" id="btn-call-answer">Atender</button>
+        <button class="btn danger" id="btn-call-end">Encerrar</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="shift-bar" id="shift-bar" aria-hidden="true"></div>
+
+  <header class="topbar">
+    <div class="clock" id="clock">--:--</div>
+    <div class="brand">
+      <span class="brand-name" id="brand-name">PAINEL TFT</span>
+      <span class="brand-year">2016</span>
+    </div>
+    <div class="status-pills">
+      <span class="pill" id="pill-vehicle" data-ok="0">OBD</span>
+      <span class="pill" id="pill-gps" data-ok="0">GPS</span>
+      <span class="pill pill-src" id="pill-source">—</span>
+    </div>
+    <div class="alert-chip" id="alert-chip" hidden></div>
+  </header>
+
+  <main id="pages" class="pages">
+    <!-- Início -->
+    <section class="page active" data-page="home" id="page-home">
+      <div class="home-top">
+        <div class="home-clock" id="home-clock">--:--</div>
+        <div class="home-now" id="home-now">Toque em um app</div>
+      </div>
+      <div class="home-grid" id="home-grid"></div>
+    </section>
+
+    <!-- Painel -->
+    <section class="page" data-page="gauges" id="page-gauges">
+
+      <div class="hud-gauges" id="hud-gauges">
+
+      <div class="hud-telltales" id="hud-telltales">
+        <div class="telltale" id="tt-low_beam"><svg viewBox="0 0 24 16"><path d="M9 3h3c3 0 6 2 8 5-2 3-5 5-8 5H9"/><path d="M3 4h5M2 8h6M3 12h5"/></svg><span class="tt-label">Farol baixo</span></div>
+        <div class="telltale" id="tt-high_beam"><svg viewBox="0 0 24 16"><path d="M9 3h3c4 0 7 2 9 5-2 3-5 5-9 5H9"/><path d="M2 3h7M2 8h8M2 13h7"/></svg><span class="tt-label">Farol alto</span></div>
+        <div class="telltale" id="tt-parking_lights"><svg viewBox="0 0 24 16"><circle cx="8" cy="8" r="4"/><path d="M13 4h8M13 8h8M13 12h8"/></svg><span class="tt-label">Lanterna</span></div>
+        <div class="telltale" id="tt-turn_left"><svg viewBox="0 0 24 16"><path d="M11 3v3h9v4h-9v3L3 8z"/></svg><span class="tt-label">Seta esq.</span></div>
+        <div class="telltale" id="tt-turn_right"><svg viewBox="0 0 24 16"><path d="M13 3v3H4v4h9v3l8-5z"/></svg><span class="tt-label">Seta dir.</span></div>
+        <div class="telltale warn" id="tt-parking_brake"><svg viewBox="0 0 24 16"><circle cx="8" cy="10" r="4"/><circle cx="16" cy="10" r="4"/><path d="M6 4h12M12 4v3"/></svg><span class="tt-label">Freio de mão</span></div>
+        <div class="telltale alert" id="tt-check_engine"><svg viewBox="0 0 24 16"><path d="M5 10h2l1-3 2 7 2-5 1 3h6"/><rect x="3" y="6" width="4" height="6" rx="1"/><path d="M19 6v8"/></svg><span class="tt-label">Check engine</span></div>
+        <div class="telltale warn" id="tt-door_open"><svg viewBox="0 0 24 16"><path d="M6 2h8v12H6z"/><path d="M14 4l5 1v9h-5"/><circle cx="16.5" cy="9" r="0.6" fill="currentColor"/></svg><span class="tt-label">Porta aberta</span></div>
+        <div class="telltale warn" id="tt-seatbelt"><svg viewBox="0 0 24 16"><circle cx="12" cy="4" r="2"/><path d="M5 14l7-6 7 6M9 14h6"/></svg><span class="tt-label">Cinto</span></div>
+      </div>
+
+        <div class="hud-left">
+          <div class="hud-panel-hud hud-readout speed">
+            <div class="hud-kicker">Velocidade</div>
+            <div class="hud-value" id="hud-speed-value">0</div>
+            <div class="hud-unit" id="hud-speed-unit">km/h</div>
+            <div class="hud-seg" id="hud-speed-bar"></div>
+            <div class="hud-scale"><span>0</span><span>240</span></div>
+          </div>
+          <div class="hud-panel-hud hud-readout rpm">
+            <div class="hud-kicker">Rotação do motor</div>
+            <div class="hud-value" id="hud-rpm-value">0</div>
+            <div class="hud-unit">rpm</div>
+            <div class="hud-seg rpm" id="hud-rpm-bar"></div>
+            <div class="hud-scale"><span>0</span><span>8.000</span></div>
+          </div>
+        </div>
+        <div class="hud-center">
+          <div class="hud-stage" id="hud-stage">
+            <canvas id="hud-car-canvas"></canvas>
+            <div id="hud-hero" class="hud-hero" hidden aria-hidden="true">
+              <div class="hud-hero-stack">
+                <div class="hud-hero-halo"></div>
+                <div class="hud-hero-tint"></div>
+                <div class="hud-hero-core"></div>
+                <div class="hud-hero-scan"></div>
+              </div>
+            </div>
+            <svg id="hud-leaders" xmlns="http://www.w3.org/2000/svg">
+              <path id="hud-leaders-path" d=""></path>
+            </svg>
+            <button type="button" id="hud-rotate-toggle" title="Pausar rotação" aria-pressed="false">❚❚</button>
+            <div id="hud-fps-wrap" hidden>FPS <span id="hud-fps">—</span></div>
+          </div>
+          <div class="hud-gear">
+            <div id="hud-gear-current">P</div>
+            <div id="hud-gear-strip"></div>
+          </div>
+        </div>
+        <div class="hud-callouts">
+          <div class="hud-callout" id="hud-co-motor">
+            <div class="co-title">Motor</div>
+            <div class="co-row"><span>TEMP.</span><b id="hud-coolant">—</b></div>
+            <div class="co-row"><span>CARGA</span><b id="hud-load">—</b></div>
+          </div>
+          <div class="hud-callout" id="hud-co-cvt">
+            <div class="co-title">CVT</div>
+            <div class="co-row"><span>FLUIDO</span><b id="hud-cvt-temp">—</b></div>
+            <div class="co-row"><span>RELAÇÃO</span><b id="hud-cvt-ratio">—</b></div>
+          </div>
+          <div class="hud-callout" id="hud-co-battery">
+            <div class="co-title">Bateria</div>
+            <div class="co-row"><span>TENSÃO</span><b id="hud-volt">—</b></div>
+          </div>
+          <div class="hud-callout" id="hud-co-wheels">
+            <div class="co-title">Rodas</div>
+            <div class="co-row"><span id="hud-drive-co">TRAÇÃO DIANTEIRA</span></div>
+            <div class="co-row" id="hud-tpms"><span>PRESSÃO</span><b id="hud-tpms-val">—</b></div>
+          </div>
+        </div>
+        <div class="hud-status">
+          <span id="hud-status-drive">TRAÇÃO DIANTEIRA</span>
+          <span id="hud-status-stab">ESTABILIDADE: ATIVO</span>
+          <span id="hud-status-mode">MOD. CONDUÇÃO: NORMAL</span>
+          <span id="hud-status-obd">OBD · —</span>
+        </div>
+      </div>
+
+      <div class="gauges-layout" id="gauges-classic">
+        <div class="gauge-col hud-panel">
+          <canvas id="gauge-rpm" width="260" height="260"></canvas>
+        </div>
+        <div class="speed-col">
+          <div class="speed-value" id="speed-value">0</div>
+          <div class="speed-unit" id="speed-unit">km/h</div>
+          <div class="drive-panel hud-panel" id="drive-panel">
+            <div class="cvt-block" id="cvt-block">
+              <div class="cvt-head">
+                <span class="cvt-label">CVT</span>
+                <span class="cvt-ratio" id="cvt-ratio">—</span>
+              </div>
+              <div class="cvt-bar" id="cvt-bar">
+                <div class="cvt-fill" id="cvt-fill"></div>
+                <div class="cvt-needle" id="cvt-needle"></div>
+              </div>
+              <div class="cvt-ends"><span>LOW</span><span id="cvt-sub">— rpm/km/h</span><span>HIGH</span></div>
+            </div>
+            <div class="gear-badge" id="gear-badge" hidden>N</div>
+          </div>
+          <div class="mini-stats">
+            <div><span class="k">CONS.</span><span class="v" id="inst-cons">—</span></div>
+            <div><span class="k">MÉDIO</span><span class="v" id="avg-cons">—</span></div>
+            <div><span class="k">VIAGEM</span><span class="v" id="trip-dist">0.0 km</span></div>
+            <div id="cvt-temp-stat" hidden><span class="k">CVT</span><span class="v" id="cvt-temp-val">—</span></div>
+          </div>
+        </div>
+        <div class="side-col">
+          <div class="hud-panel tight"><canvas id="gauge-temp" width="160" height="160"></canvas></div>
+          <div class="hud-panel tight"><canvas id="gauge-volt" width="160" height="160"></canvas></div>
+        </div>
+      </div>
+      <div class="bars">
+        <div class="bar">
+          <span class="bar-label">Acelerador</span>
+          <div class="bar-track"><div class="bar-fill accent" id="bar-throttle"></div></div>
+          <span class="bar-val" id="val-throttle">0%</span>
+        </div>
+        <div class="bar">
+          <span class="bar-label">Carga</span>
+          <div class="bar-track"><div class="bar-fill cyan" id="bar-load"></div></div>
+          <span class="bar-val" id="val-load">0%</span>
+        </div>
+        <div class="bar">
+          <span class="bar-label">Combustível</span>
+          <div class="bar-track"><div class="bar-fill green" id="bar-fuel"></div></div>
+          <span class="bar-val" id="val-fuel">—</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Carro -->
+    <section class="page" data-page="car" id="page-car">
+      <div class="car-stage hud-panel" id="car-stage"></div>
+      <div class="car-top hud-panel" id="car-top"></div>
+      <div class="car-alerts" id="car-alerts"></div>
+      <div class="tpms-row" id="tpms-row"></div>
+      <div class="car-vin" id="car-vin">
+        <div class="car-photo-credit" id="car-photo-credit" hidden></div>
+        <span class="vin-label">VIN</span>
+        <span class="vin-code" id="vin-code">—</span>
+        <span id="vin-info">Mitsubishi Lancer 2016</span>
+        <span class="vin-src" id="vin-src"></span>
+      </div>
+    </section>
+
+    <section class="page" data-page="sensors" id="page-sensors">
+      <div class="sensors-grid" id="sensors-grid"></div>
+    </section>
+
+    <section class="page" data-page="map" id="page-map">
+      <div id="map" class="map"></div>
+      <div class="map-hud hud-panel">
+        <div><span class="k">GPS</span><span class="v" id="hud-gps-speed">— km/h</span></div>
+        <div><span class="k">RUMO</span><span class="v" id="hud-heading">—°</span></div>
+        <div><span class="k">ALT</span><span class="v" id="hud-alt">— m</span></div>
+        <div><span class="k">SATS</span><span class="v" id="hud-sats">—</span></div>
+        <div class="coords" id="hud-coords">—</div>
+        <div class="range-chip">
+          <span class="km" id="range-km">— km</span>
+          <button class="btn src-btn" id="btn-postos">Postos</button>
+        </div>
+        <div class="note" id="range-note" style="font-size:10px;color:var(--muted);margin-top:4px;max-width:240px"></div>
+      </div>
+      <div class="range-panel hud-panel" id="range-panel" hidden>
+        <div class="cvt-label">POSTOS NO ALCANCE</div>
+        <div id="range-list"></div>
+      </div>
+    </section>
+
+    <!-- Câmeras -->
+    <section class="page" data-page="cameras" id="page-cameras">
+      <div class="cam-toolbar">
+        <button class="btn src-btn" data-cam="grid" id="btn-cam-grid">Grade</button>
+        <button class="btn src-btn" data-cam="front">Frente</button>
+        <button class="btn src-btn" data-cam="rear">Ré</button>
+        <button class="btn src-btn" data-cam="left">Esq.</button>
+        <button class="btn src-btn" data-cam="right">Dir.</button>
+        <button class="btn src-btn" data-cam="birdseye">360°</button>
+        <span class="rev" id="cam-rev">RÉ OFF</span>
+      </div>
+      <div class="cam-grid grid-4" id="cam-grid"></div>
+    </section>
+
+    <!-- Mídia -->
+    <section class="page" data-page="media" id="page-media">
+      <div class="media-now hud-panel" style="padding:10px">
+        <div class="cover" id="media-cover">♪</div>
+        <div class="now-title" id="media-title">Parado</div>
+        <div class="now-artist" id="media-artist">—</div>
+        <div class="transport">
+          <button class="btn" id="btn-prev">⟨⟨</button>
+          <button class="btn primary" id="btn-play">▶</button>
+          <button class="btn" id="btn-next">⟩⟩</button>
+        </div>
+        <div class="vol"><span>VOL</span><input type="range" id="media-vol" min="0" max="100" value="70"></div>
+        <div class="eq" id="eq-box"></div>
+      </div>
+      <div class="media-list hud-panel" style="padding:8px">
+        <div class="media-tabs">
+          <button class="btn src-btn on" data-src="local">Arquivos</button>
+          <button class="btn src-btn" data-src="radio">Rádio online</button>
+          <button class="btn src-btn" data-src="bluetooth">Bluetooth</button>
+        </div>
+        <div id="media-rows"></div>
+      </div>
+    </section>
+
+    <!-- Telefone -->
+    <section class="page" data-page="phone" id="page-phone">
+      <div>
+        <div class="phone-number" id="phone-number"></div>
+        <div class="keypad" id="keypad"></div>
+        <div class="transport" style="margin-top:8px">
+          <button class="btn primary" id="btn-dial">Discar</button>
+          <button class="btn" id="btn-backspace">⌫</button>
+          <button class="btn danger" id="btn-hang">Encerrar</button>
+        </div>
+      </div>
+      <div class="hud-panel" style="padding:6px;overflow:auto">
+        <div class="cvt-label">AGENDA</div>
+        <div id="phone-contacts"></div>
+      </div>
+      <div class="hud-panel" style="padding:6px;overflow:auto">
+        <div class="cvt-label">REGISTRO</div>
+        <div id="phone-log"></div>
+        <button class="btn" id="btn-demo-in" style="margin-top:8px">Simular chamada</button>
+      </div>
+    </section>
+
+    <!-- Rádio FM + online -->
+    <section class="page" data-page="radio" id="page-radio">
+      <div class="fm-dial hud-panel" style="padding:16px">
+        <div class="fm-name" id="fm-name">FM</div>
+        <div class="fm-mhz" id="fm-mhz">90.5 <span>MHz</span></div>
+        <input class="fm-slider" type="range" id="fm-slider" min="760" max="1080" value="905">
+        <div class="transport" style="justify-content:center;margin-top:10px">
+          <button class="btn primary" id="btn-fm-play">▶ FM</button>
+          <button class="btn" id="btn-fm-stop">Parar</button>
+        </div>
+        <p class="fm-hint" id="fm-hint">FM via dongle RTL-SDR (opcional). Sem o dongle, o sintonizador é só visual — use o rádio online à direita.</p>
+      </div>
+      <div class="hud-panel" style="padding:8px;overflow:auto">
+        <div class="cvt-label">PRESETS FM</div>
+        <div id="fm-presets"></div>
+        <div class="cvt-label" style="margin-top:10px">RÁDIO ONLINE</div>
+        <div id="fm-online"></div>
+      </div>
+    </section>
+
+    <!-- CarPlay / Android Auto -->
+    <section class="page" data-page="carplay" id="page-carplay">
+      <div class="cp-shell">
+        <div class="cp-bar">
+          <button class="btn" id="btn-cp-back">← Painel</button>
+          <strong id="cp-status" style="font-family:Orbitron,sans-serif;font-size:11px;letter-spacing:.1em">SIMULADOR</strong>
+          <button class="btn primary" id="btn-cp-launch">Abrir dongle</button>
+        </div>
+        <div class="cp-grid" id="cp-grid"></div>
+        <div class="cp-banner" id="cp-banner"></div>
+      </div>
+    </section>
+
+    <section class="page" data-page="trip" id="page-trip">
+      <div class="trip-grid">
+        <div class="stat-card big hud-panel">
+          <div class="stat-label">Distância</div>
+          <div class="stat-value" id="t-distance">0.00</div>
+          <div class="stat-unit">km</div>
+        </div>
+        <div class="stat-card big hud-panel">
+          <div class="stat-label">Tempo</div>
+          <div class="stat-value" id="t-time">00:00</div>
+          <div class="stat-unit">hh:mm:ss</div>
+        </div>
+        <div class="stat-card hud-panel"><div class="stat-label">Consumo médio</div><div class="stat-value" id="t-avg">—</div><div class="stat-unit">L/100 km</div></div>
+        <div class="stat-card hud-panel"><div class="stat-label">Consumo instantâneo</div><div class="stat-value" id="t-inst">—</div><div class="stat-unit">L/100 km</div></div>
+        <div class="stat-card hud-panel"><div class="stat-label">Vel. média</div><div class="stat-value" id="t-avgspeed">—</div><div class="stat-unit">km/h</div></div>
+        <div class="stat-card hud-panel"><div class="stat-label">Vel. máxima</div><div class="stat-value" id="t-maxspeed">—</div><div class="stat-unit">km/h</div></div>
+        <div class="stat-card hud-panel"><div class="stat-label">Combustível usado</div><div class="stat-value" id="t-fuel">—</div><div class="stat-unit">L</div></div>
+        <div class="stat-card hud-panel"><div class="stat-label">Viagem atual</div><div class="stat-value" id="t-id">—</div><div class="stat-unit">id</div></div>
+      </div>
+      <div class="trip-actions">
+        <button class="btn" id="btn-trip-new">Nova viagem</button>
+        <button class="btn primary" id="btn-gpx">Exportar GPX</button>
+      </div>
+    </section>
+
+    <section class="page" data-page="dtcs" id="page-dtcs">
+      <div class="dtc-head">
+        <div class="mil" id="mil-lamp" data-on="0">MIL</div>
+        <div class="dtc-title">Códigos de falha</div>
+        <button class="btn" id="btn-dtc-refresh">Atualizar</button>
+        <button class="btn danger" id="btn-dtc-clear">Apagar códigos</button>
+      </div>
+      <ul class="dtc-list" id="dtc-list">
+        <li class="dtc-empty">Nenhum código armazenado.</li>
+      </ul>
+    </section>
+
+    <section class="page" data-page="settings" id="page-settings">
+      <div class="settings-grid">
+        <label>Visual
+          <select id="set-theme">
+            <option value="hud">HUD Reator (padrão)</option>
+            <option value="classic">Clássico vermelho</option>
+          </select>
+        </label>
+        <label>Cor de destaque
+          <select id="set-accent">
+            <option value="arc">Reator arc</option>
+            <option value="red">Vermelho</option>
+            <option value="matrix">Verde Matrix</option>
+            <option value="amber">Âmbar</option>
+            <option value="violet">Roxo</option>
+            <option value="white">Branco</option>
+            <option value="custom">Personalizado…</option>
+          </select>
+        </label>
+        <label>Cor personalizada
+          <input type="color" id="set-accent-hex" value="#00D8FF">
+        </label>
+        <div class="accent-swatches" id="set-accent-swatches" style="grid-column:1/-1"></div>
+        <label>Rotação do carro 3D
+          <select id="set-hud-rotate">
+            <option value="on">Ligar (padrão)</option>
+            <option value="off">Pausar</option>
+          </select>
+        </label>
+        <label>Telltales sem fonte
+          <select id="set-unused-tt">
+            <option value="dim">Esmaecer</option>
+            <option value="hide">Ocultar</option>
+          </select>
+        </label>
+        <label>Cor do carro
+          <input type="color" id="set-car-color" value="#b1121a">
+        </label>
+        <label>Transmissão
+          <select id="set-trans">
+            <option value="cvt">CVT (Jatco) — padrão do HL</option>
+            <option value="manual">Manual 5 marchas</option>
+          </select>
+        </label>
+        <label>Modo desempenho (Pi 4)
+          <select id="set-perf">
+            <option value="off">Visual completo (glow)</option>
+            <option value="on">Leve — sem glow/pulsos</option>
+          </select>
+        </label>
+        <label>Unidade de velocidade
+          <select id="set-speed-unit">
+            <option value="kmh">km/h</option>
+            <option value="mph">mph</option>
+          </select>
+        </label>
+        <label>Temperatura
+          <select id="set-temp-unit">
+            <option value="c">°C</option>
+            <option value="f">°F</option>
+          </select>
+        </label>
+        <label>Combustível
+          <select id="set-fuel">
+            <option value="flex">Flex (E27 padrão)</option>
+            <option value="gasoline">Gasolina</option>
+            <option value="ethanol">Etanol</option>
+          </select>
+        </label>
+        <label>Modo noturno
+          <select id="set-night">
+            <option value="auto">Automático (18h–6h)</option>
+            <option value="sunset">Pôr do sol (GPS)</option>
+            <option value="on">Ligado</option>
+            <option value="off">Desligado</option>
+          </select>
+        </label>
+        <fieldset class="gauge-opts" id="gauge-opts" style="border:1px solid var(--stroke);padding:8px;grid-column:1/-1">
+          <legend style="font-family:Orbitron,sans-serif;font-size:10px;letter-spacing:.1em;color:var(--muted)">MEDIDORES NO PAINEL</legend>
+          <label style="display:inline-block;margin-right:10px"><input type="checkbox" id="g-rpm" checked> RPM</label>
+          <label style="display:inline-block;margin-right:10px"><input type="checkbox" id="g-temp" checked> Motor</label>
+          <label style="display:inline-block;margin-right:10px"><input type="checkbox" id="g-volt" checked> Bateria</label>
+          <label style="display:inline-block;margin-right:10px"><input type="checkbox" id="g-cvt" checked> CVT</label>
+          <label style="display:inline-block;margin-right:10px"><input type="checkbox" id="g-bars" checked> Barras</label>
+        </fieldset>
+        <label>Alerta temp. motor (°C)
+          <input type="number" id="set-coolant" min="80" max="130" step="1">
+        </label>
+        <label>Alerta tensão baixa (V)
+          <input type="number" id="set-vlow" min="10" max="13" step="0.1">
+        </label>
+        <label>Alerta RPM
+          <input type="number" id="set-rpm" min="4000" max="8000" step="100">
+        </label>
+        <label id="label-cvt-alert">Alerta fluido CVT (°C)
+          <input type="number" id="set-cvt-temp" min="80" max="140" step="1">
+        </label>
+        <label>Brilho (<span id="bright-val">80</span>%)
+          <input type="range" id="set-bright" min="10" max="100" step="5">
+        </label>
+      </div>
+      <div class="settings-foot">
+        <button class="btn primary" id="btn-save-settings">Salvar ajustes</button>
+        <button class="btn danger" id="btn-shutdown">Desligar o Pi</button>
+        <p class="hint">O desligamento seguro só funciona com LANCER_ALLOW_SHUTDOWN=1. A temp. da CVT é experimental (Mode 22).</p>
+      </div>
+    </section>
+
+    <section class="page xpage" data-page="perf" id="page-perf">
+      <div class="xhead"><h2>DESEMPENHO</h2><span class="sub" id="perf-src">GPS + OBD</span>
+        <div class="xrow">
+          <button class="btn" id="btn-sprint">Arrancada (sim)</button>
+          <button class="btn" id="btn-perf-reset">Zerar</button>
+        </div>
+      </div>
+      <div class="xgrid cols-4" id="perf-cards"></div>
+      <div class="hist-list" id="perf-hist"></div>
+      <p class="shift-cfg">Shift light:
+        <span id="shift-pts-label">4500 / 5200 / 5800 / 6200</span> rpm
+        <input id="shift-pts" type="text" value="4500,5200,5800,6200" style="width:14em">
+        <button class="btn" id="btn-shift-save">Salvar pontos</button>
+      </p>
+    </section>
+
+    <section class="page xpage" data-page="track" id="page-track">
+      <div class="xhead">
+        <h2>PISTA</h2>
+        <span class="delta-val" id="track-delta">—</span>
+        <div class="xrow">
+          <button class="btn" id="btn-gate-here">Portão aqui</button>
+          <button class="btn" id="btn-gate-map">Toque no mapa</button>
+          <button class="btn primary" id="btn-track-start">Iniciar sessão</button>
+          <button class="btn" id="btn-track-stop">Encerrar</button>
+        </div>
+      </div>
+      <div class="delta-bar" id="delta-bar"><div class="fill" id="delta-fill"></div><div class="needle" id="delta-needle"></div></div>
+      <div class="xrow">
+        <div class="cardx" style="flex:0 0 auto"><div class="k">Volta</div><div class="v" id="track-lap">0</div></div>
+        <div class="cardx" style="flex:1"><div class="k">Tempo</div><div class="v" id="track-time">0:00.000</div></div>
+        <div class="cardx" style="flex:1"><div class="k">Melhor</div><div class="v" id="track-best">—</div></div>
+      </div>
+      <canvas id="track-canvas" width="780" height="210"></canvas>
+      <div class="sess-list" id="track-sess"></div>
+    </section>
+
+    <section class="page xpage" data-page="gforce" id="page-gforce">
+      <div class="xhead">
+        <h2>G-FORCE</h2>
+        <span class="sub" id="gforce-src">fonte: GPS</span>
+        <div class="xrow">
+          <button class="btn" id="btn-g-reset">Zerar picos</button>
+          <button class="btn" id="btn-g-cal">Calibrar IMU</button>
+        </div>
+      </div>
+      <div class="xrow" style="flex:1; align-items:stretch">
+        <canvas id="gforce-canvas" width="260" height="260"></canvas>
+        <div style="flex:1; display:flex; flex-direction:column; gap:6px">
+          <div class="cardx"><div class="k">Longitudinal</div><div class="v" id="g-ax">0.00</div><div class="u">g (acelera + / freia −)</div></div>
+          <div class="cardx"><div class="k">Lateral</div><div class="v" id="g-ay">0.00</div><div class="u">g (curva)</div></div>
+          <div class="cardx"><div class="k">Picos</div><div class="best" id="g-peaks">lon 0.00 · lat 0.00</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="page xpage" data-page="telemetry" id="page-telemetry">
+      <div class="xhead">
+        <h2>TELEMETRIA</h2>
+        <span class="sub" id="telem-stat">parado</span>
+        <div class="xrow">
+          <label>Hz <input id="telem-hz" type="number" min="1" max="25" value="10" style="width:4em"></label>
+          <button class="btn primary" id="btn-telem-start">Gravar</button>
+          <button class="btn" id="btn-telem-stop">Parar</button>
+        </div>
+      </div>
+      <canvas id="telem-chart" width="780" height="160"></canvas>
+      <div class="sess-list" id="telem-sess"></div>
+    </section>
+
+    <section class="page xpage" data-page="dashcam" id="page-dashcam">
+      <div class="xhead">
+        <h2>DASH CAM</h2>
+        <span class="sub" id="dash-stat">parada</span>
+        <div class="xrow">
+          <button class="btn primary" id="btn-dash-start">Gravar</button>
+          <button class="btn" id="btn-dash-stop">Parar</button>
+          <button class="btn" id="btn-dash-protect">Proteger clipe</button>
+        </div>
+      </div>
+      <div class="cardx" id="dash-overlay">overlay: velocidade · RPM · G · GPS (ffmpeg)</div>
+      <div class="clip-list" id="dash-clips"></div>
+    </section>
+
+    <section class="page xpage" data-page="health" id="page-health">
+      <div class="xhead">
+        <h2>SAÚDE</h2>
+        <span class="sub">Hodômetro
+          <strong id="odo-km">—</strong> km
+          <input id="odo-input" type="number" step="1" style="width:7em" placeholder="ajustar">
+          <button class="btn" id="btn-odo">Salvar</button>
+        </span>
+      </div>
+      <div class="xrow">
+        <div class="cardx" style="flex:1">
+          <div class="k">Bateria</div>
+          <div class="best" id="batt-line">partida — · repouso —</div>
+          <div class="batt-warn" id="batt-warn"></div>
+        </div>
+      </div>
+      <div class="svc-list" id="svc-list"></div>
+      <div class="hist-list" id="dtc-hist"></div>
+    </section>
+
+    <section class="page xpage" data-page="leds" id="page-leds">
+      <div class="xhead"><h2>LEDS AMBIENTE</h2><span class="sub" id="led-hw">preview</span></div>
+      <canvas id="led-strip" width="780" height="36"></canvas>
+      <div class="xrow led-modes" id="led-modes">
+        <button class="btn" data-mode="rpm">RPM</button>
+        <button class="btn" data-mode="music">Música</button>
+        <button class="btn" data-mode="alerts">Alertas</button>
+        <button class="btn" data-mode="static">Cor fixa</button>
+        <button class="btn" data-mode="off">Off</button>
+        <label>Cor <input type="color" id="led-color" value="#e10600"></label>
+        <label>Brilho <input type="range" id="led-bright" min="0" max="100" value="40"></label>
+      </div>
+      <p class="hint">Fita WS2812/WS2815 no GPIO 18, com transmissor 3V3→5V e fonte 5V dedicada (GND comum). Controle também pelo app do celular.</p>
+    </section>
+
+    <section class="page xpage" data-page="valet" id="page-valet">
+      <div class="xhead"><h2>VALET</h2><span class="sub" id="valet-state">destravado</span></div>
+      <div class="xrow pin-row">
+        <input id="valet-pin" type="password" inputmode="numeric" maxlength="8" placeholder="PIN">
+        <button class="btn danger" id="btn-valet-lock">Travar</button>
+        <button class="btn primary" id="btn-valet-unlock">Destravar</button>
+      </div>
+      <div class="xrow">
+        <div class="cardx" style="flex:1"><div class="k">Vel. máx.</div><div class="v" id="valet-vmax">—</div></div>
+        <div class="cardx" style="flex:1"><div class="k">Eventos</div><div class="v" id="valet-ev">0</div></div>
+      </div>
+      <div class="report" id="valet-report"></div>
+    </section>
+
+  </main>
+
+  <div class="lock-banner" id="lock-banner">MODO VALET ATIVO — mídia, telefone e ajustes bloqueados</div>
+  <nav class="tabbar" id="tabbar">
+    <button data-page="home" class="active">Início</button>
+    <button data-page="gauges">Painel</button>
+    <button data-page="car">Carro</button>
+    <button data-page="map">Mapa</button>
+    <button data-page="cameras">Câm.</button>
+    <button data-page="media">Mídia</button>
+    <button data-page="phone">Tel.</button>
+    <button data-page="settings">Ajustes</button>
+  </nav>
+
+  <div class="modal" id="modal" hidden>
+    <div class="modal-card">
+      <h2 id="modal-title">Confirmar</h2>
+      <p id="modal-text"></p>
+      <div class="modal-actions">
+        <button class="btn" id="modal-cancel">Cancelar</button>
+        <button class="btn danger" id="modal-ok">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="/static/vendor/leaflet.js"></script>
+  <script src="/static/vendor/three.min.js"></script>
+  <script src="/static/js/hud-car.js"></script>
+  <script src="/static/js/hud.js"></script>
+  <script src="/static/js/gauges.js"></script>
+  <script src="/static/js/map.js"></script>
+  <script src="/static/js/car.js"></script>
+  <script src="/static/js/cameras.js"></script>
+  <script src="/static/js/media.js"></script>
+  <script src="/static/js/icons.js"></script>
+  
+  <div id="setup-wizard" hidden>
+    <div class="wiz-card">
+      <div class="wiz-step" id="wiz-step">PASSO 1 DE 4</div>
+      <h1 id="wiz-title">PAINEL TFT</h1>
+      <p class="lead" id="wiz-lead">Um painel auxiliar para qualquer carro. Vamos identificar o seu.</p>
+      <div id="wiz-body"></div>
+      <div class="wiz-actions">
+        <button class="btn" id="wiz-back" hidden>Voltar</button>
+        <button class="btn" id="wiz-skip">Agora não</button>
+        <button class="btn primary" id="wiz-next">Continuar</button>
+      </div>
+    </div>
+  </div>
+  <script src="/static/js/setup.js"></script>
+  <script src="/static/js/extras.js"></script>
+  <script src="/static/js/app.js"></script>
+</body>
+</html>

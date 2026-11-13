@@ -1,0 +1,321 @@
+# Configuração do Painel TFT (serve para qualquer carro).
+# Valores específicos (tanque, câmbio, silhueta…) ficam em profiles/*.yaml.
+# O Lancer HL 2016 é só um perfil de exemplo.
+# Copie este arquivo e ajuste. Valores também podem ser sobrescritos
+# por variáveis de ambiente com prefixo LANCER_ (ex.: LANCER_SOURCE=obd).
+
+source: simulator          # simulator | obd | can
+profile: auto              # auto (VIN/assistente) ou id em profiles/ (ex.: lancer-2016-cvt)
+transmission: cvt         # cvt | manual | auto  (sobrescrito pelo perfil ativo)
+host: "0.0.0.0"
+port: 8080
+
+obd:
+  port: /dev/rfcomm0       # rfcomm após parear o ELM327, ou /dev/ttyUSB0
+  baudrate: 38400
+  timeout_s: 1.5
+  fast_delay_s: 0.05       # pausa mínima entre PIDs (clone v2.1 é lento)
+
+can:
+  channel: can0
+  bitrate: 500000
+  interface: socketcan
+  request_id: 0x7DF        # broadcast funcional OBD2
+  response_id: 0x7E8       # ECU motora típica
+  timeout_s: 0.08
+
+gps:
+  enabled: true
+  host: 127.0.0.1
+  port: 2947               # gpsd
+  # No simulador o GPS é gerado junto, sem gpsd.
+
+fuel:
+  type: flex               # gasoline | ethanol | flex
+  flex_ethanol_percent: 27 # E27 comum no Brasil (gasolina comum)
+  tank_liters: 50          # tanque aproximado do Lancer
+  reserve_liters: 3        # abaixo disso a chegada no posto é 'no limite'
+  idle_l_per_min: 0.025    # consumo extra por minuto de congestionamento
+  fallback_l100: 9.5       # L/100 km se ainda não houver janela de consumo
+  manual_liters: null      # litros após 'tanque cheio' (quando não há PID 0x2F)
+
+units:
+  speed: kmh               # kmh | mph
+  temperature: c           # c | f
+  pressure: kpa            # kpa | psi
+  consumption: l100km      # l100km | kml | mpg
+
+alerts:
+  coolant_temp_c: 105
+  voltage_low_v: 11.8
+  voltage_high_v: 15.2
+  rpm_high: 6200
+  cvt_temp_c: 120          # fluido da CVT (só alerta se houver leitura)
+  range_km: 40             # alerta de autonomia baixa (km)
+
+ui:
+  night_mode: auto         # auto | sunset | on | off  (auto: 18h–6h; sunset usa o GPS)
+  brightness: 80           # 0-100, tenta /sys/class/backlight
+  theme: hud               # hud (padrão, wireframe) | classic (Clássico vermelho)
+  accent: arc              # arc | red | matrix | amber | violet | white | custom
+  accent_hex: "#00D8FF"    # Reator arc (ciano). Seletor no app / PWA.
+  performance_mode: false  # desliga glow/pulsos e reduz o 3D para aliviar o Pi 4
+  hud_rotate: true         # rotação lenta do carro wireframe (desligue no Pi 4 se precisar)
+  unused_telltales: dim    # dim | hide  — telltales sem fonte configurada
+  car_color: "#b1121a"     # pintura da silhueta (app / Ajustes)
+  gauges:                  # o que aparece no Painel
+    rpm: true
+    temp: true
+    volt: true
+    cvt: true
+    bars: true
+
+cvt:
+  # Temperatura do fluido via UDS Mode 22 na TCM. EXPERIMENTAL e
+  # desligado por padrão. Funciona de forma confiável na fonte CAN
+  # (SocketCAN). No ELM327 exige ATSH (troca de header); clones v2.1
+  # costumam falhar. O DID varia por ano/ECU — confirme com um log.
+  fluid_temp_enabled: false
+  tcm_request_id: 0x7E1    # pedido à TCM Mitsubishi (resposta típica 0x7E9)
+  tcm_response_id: 0x7E9
+  did: 0x2101              # identifique o DID real do seu carro antes de confiar
+  decode: a_minus_40       # a_minus_40 | u16_minus_40 | raw_a
+  interval_s: 5
+
+trip:
+  db_path: data/trips.sqlite
+  log_interval_s: 1.0
+  auto_start: true
+
+map:
+  # Tiles offline: diretório z/x/y.png ou arquivo MBTiles.
+  tiles_dir: app/static/tiles
+  mbtiles_path: data/region.mbtiles
+  # Fallback online (precisa de internet no Pi). Esri Dark Gray, sem chave de API.
+  # Alternativa OSM: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+  online_url: "https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}"
+  online_attribution: "Tiles &copy; Esri"
+  default_lat: -23.5505
+  default_lon: -46.6333
+  default_zoom: 15
+
+scheduler:
+  # Orçamento de PIDs por segundo no ELM327 clone (~3–8/s).
+  elm_budget_per_s: 5
+  can_budget_per_s: 40
+  dtc_interval_s: 20
+
+cameras:
+  # Até 4 câmeras USB/UVC + uma de ré. No simulador (ou se o /dev/video*
+  # não existir) o painel gera feeds de teste.
+  enabled: true
+  width: 640
+  height: 360
+  fps: 12                  # conservador para o Pi 4
+  jpeg_quality: 55
+  reverse_gpio: null       # BCM, ex.: 17; null = desligado
+  reverse_active_low: false
+  devices:
+    - id: front
+      label: Frente
+      device: /dev/video0
+    - id: rear
+      label: Ré
+      device: /dev/video1
+      reverse: true
+    - id: left
+      label: Esquerda
+      device: /dev/video2
+    - id: right
+      label: Direita
+      device: /dev/video3
+  birdseye:
+    enabled: true            # mostra a página 360; a costura real exige calibração
+    calib_dir: data/birdseye
+
+media:
+  music_dir: data/music      # MP3/FLAC/OGG/M4A
+  volume: 70
+  # Bluetooth A2DP sink + AVRCP (BlueZ / D-Bus). No simulador é só mock.
+  bluetooth: true
+  # Volume: tenta wpctl (PipeWire), pactl (Pulse) e amixer (ALSA), nessa ordem.
+  radio:
+    - name: "CBN São Paulo"
+      url: "https://playerservices.streamtheworld.com/api/livestream-redirect/CBN_SPAAC.aac"
+    - name: "Jovem Pan SP"
+      url: "https://playerservices.streamtheworld.com/api/livestream-redirect/JP_SP_FM.mp3"
+    - name: "BandNews FM SP"
+      url: "https://playerservices.streamtheworld.com/api/livestream-redirect/BANDNEWSFM_SPAAC.aac"
+    - name: "Rádio USP"
+      url: "http://flow.ej.usp.br:8000/radiousp-128.mp3"
+
+  eq: [0, 0, 0, 0, 0]       # 5 bandas, dB (−12..+12): 60, 230, 910, 4k, 14k
+  fm:
+    enabled: true            # dongle RTL-SDR opcional (rtl_fm); senão, só mock
+    mhz: 90.5
+    presets:
+      - {name: "CBN SP", mhz: 90.5}
+      - {name: "Jovem Pan", mhz: 100.9}
+      - {name: "Band FM", mhz: 96.1}
+      - {name: "Mix FM", mhz: 106.3}
+      - {name: "USP FM", mhz: 93.7}
+
+phone:
+  enabled: true              # HFP via oFono/BlueZ; mock no simulador
+  ofono: true
+
+carplay:
+  enabled: true
+  # Dongle USB estilo Carlinkit (CPC200-CCPA / 4.0 / 5.0), cabo ou wireless.
+  # O protocolo em si vem do driver open-source node-CarPlay / react-carplay
+  # (veja scripts/install-carplay.sh). Sem o dongle, a tela é um mock.
+  display: ":0"
+  launch: scripts/carplay-launch.sh
+
+vehicle:
+  # Usado quando o VIN (Mode 09 PID 02) não vem — comum em clones ELM327 v2.1.
+  vin: null
+  manufacturer: Mitsubishi
+  model: Lancer
+  year: 2016
+  trim: HL
+  engine: "2.0"
+  country: Brasil
+  facelift: true             # silhueta do Lancer pós-facelift 2015/2016
+
+companion:
+  enabled: true
+  pin: "2016"                # troque. Só quem souber o PIN altera tema/ajustes pela rede.
+  # O kiosk local (127.0.0.1) continua salvando sem PIN.
+
+range:
+  enabled: true
+  radius_m: 15000
+  max_stations: 8
+  overpass_url: "https://overpass-api.de/api/interpreter"
+  cache_path: data/stations-cache.json
+  cache_ttl_h: 24
+  # Roteamento: osrm (público, sem trânsito) | tomtom | here
+  routing: osrm
+  osrm_url: "https://router.project-osrm.org"
+  # Chaves da faixa gratuita (ou LANCER_TOMTOM_KEY / LANCER_HERE_KEY).
+  # TomTom: https://developer.tomtom.com/  — Routing API, traffic=true
+  # HERE:   https://developer.here.com/    — Routing v8, departureTime=now
+  tomtom_key: ""
+  here_key: ""
+  simulate_traffic: true     # no simulador, alguns postos ganham atraso fictício
+  force_overpass: false      # o simulador usa postos mock, a menos que isto seja true
+  force_online_routing: false
+
+# Marcha e luzes NÃO são PIDs OBD2 padrão. Inferimos, lemos um quadro CAN
+# (MCP2515) ou um pino GPIO (módulo optacoplador PC817). Ver README.
+gear_source: inferred      # inferred | can | gpio  (o perfil pode sobrescrever)
+gear_can:
+  id: 0x1D0                # exemplo; confirme no log do seu carro
+  byte: 0
+  mask: 0x0F
+  shift: 0
+  map: {0: P, 1: R, 2: N, 3: D, 4: L}
+gear_gpio:
+  active_low: true
+  # pins: {P: 5, R: 6, N: 13, D: 19, L: 26}
+  reverse_pin: null        # ou reutiliza cameras.reverse_gpio
+
+lights:
+  source: auto             # auto | sim | gpio | can
+  unused: dim              # dim | hide
+  gpio:
+    # Pinos BCM. active_low: true = lâmpada 12 V acende e o GPIO vai a 0
+    # (saída do PC817 para GND). Nunca ligue 12 V direto no Pi.
+    low_beam:        {pin: null, active_low: true}
+    high_beam:       {pin: null, active_low: true}
+    parking_lights:  {pin: null, active_low: true}
+    turn_left:       {pin: null, active_low: true}
+    turn_right:      {pin: null, active_low: true}
+    parking_brake:   {pin: null, active_low: true}
+    door_open:       {pin: null, active_low: true}
+    seatbelt:        {pin: null, active_low: true}
+  can:
+    id: 0x210
+    signals:
+      low_beam:        {byte: 0, mask: 0x01}
+      high_beam:       {byte: 0, mask: 0x02}
+      parking_lights:  {byte: 0, mask: 0x04}
+      turn_left:       {byte: 0, mask: 0x10}
+      turn_right:      {byte: 0, mask: 0x20}
+      parking_brake:   {byte: 1, mask: 0x01}
+      door_open:       {byte: 1, mask: 0x02}
+      seatbelt:        {byte: 1, mask: 0x04}
+
+# —— Desempenho, pista, IMU, telemetria, dash cam, shift, saúde, LEDs, TPMS, valet ——
+sport:
+  db_path: data/sport.sqlite
+  seed_demo: true          # preenche melhores tempos / sessões de demonstração
+
+perf:
+  enabled: true
+  # Velocidade fundida (GPS 10 Hz + OBD). Ver scripts/ublox-10hz.sh.
+
+track:
+  gate_width_m: 18
+
+imu:
+  enabled: true
+  bus: 1                   # I2C do Pi (pino 3 SDA, 5 SCL, 3V3 e GND)
+  address: 0x68            # MPU-6050 / MPU-9250 / ICM-20948
+  force_gps: false         # true = ignora a IMU e estima G pelo GPS/velocidade
+  calib_path: data/imu-calib.json
+  # Montagem: X para a frente do carro, Y para a direita, Z para cima.
+  # Calibre parado e nivelado: scripts/imu-calibrate.py (ou o botão na tela).
+
+telemetry:
+  hz: 10                   # 5–20 Hz é confortável no Pi 4; o ELM limita os PIDs
+
+dashcam:
+  enabled: true
+  dir: data/dashcam
+  max_gb: 8                # loop apaga clipes antigos não protegidos
+  segment_s: 60
+  g_protect: 0.8           # |G| longitudinal+lateral protege o clipe atual
+  camera_id: cam0          # ou id da página Câmeras (front/rear/…)
+
+shift:
+  enabled: true
+  # Pontos de RPM do shift light (modo Sport/manual do CVT ou câmbio manual)
+  rpm_points: [4500, 5200, 5800, 6200]
+  mode: bar+beep           # bar | beep | voice | bar+beep | bar+voice
+  audio: true
+
+health:
+  enabled: true
+
+leds:
+  enabled: true
+  count: 30
+  pin: 18                  # BCM 18 (PWM0). Use transmissor 3V3→5V (74AHCT125).
+  brightness: 0.4
+  mode: rpm                # rpm | music | alerts | static | off
+  static_color: "#e10600"
+  # A fita (WS2812 5V ou WS2815 12V com regulador 5V na lógica) NÃO deve
+  # ser alimentada pelo pino 5V do Pi. Use fonte 5V dedicada, GND comum.
+
+tpms:
+  enabled: true
+  simulate: true           # no carro, false + bleak para escutar anúncios BLE
+  warn_kpa: 190            # alerta abaixo disso (~27,5 psi). Calibragem típica ~220 kPa / 32 psi
+  hot_c: 70
+  bind: {}                 # { "aabbccddeeff": "fl" }  fl fr rl rr
+
+valet:
+  pin: "1234"              # troque. Independente do PIN do app (companion.pin)
+  harsh_g: 0.55
+
+
+# Foto automática do modelo (Wikimedia Commons, licenças livres).
+# Sem internet, ou se a busca falhar, a silhueta vetorial do tipo de carroceria é usada.
+car_photo:
+  enabled: true
+  fallback_provider: ""    # unsplash (opcional, exige api_key)
+  api_key: ""              # ou PAINEL_PHOTO_KEY / LANCER_PHOTO_KEY
+  # rembg (u2net) remove o fundo na 1ª descarga. No Pi: pip install rembg onnxruntime
+  # (é pesado; ~200 MB do modelo). Sem rembg a foto aparece com o fundo original.

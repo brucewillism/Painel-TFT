@@ -1,0 +1,26 @@
+id: generic-coupe
+name: Cupê (genérico)
+make: ""
+model: Cupê
+year_from: 2000
+year_to: 2035
+body: coupe
+region: BR
+engine: ""
+fuel:
+  type: flex
+  tank_liters: 50
+  fallback_l100: 9.0
+transmission: auto
+gears:
+  ratios: [4.15, 2.37, 1.56, 1.16, 0.86, 0.69]
+  final_drive: 3.73
+  tire: "225/45R17"
+  tire_circumference_m: 1.97
+shift:
+  redline: 7000
+  rpm_points: [5000, 5800, 6400, 6800]
+art:
+  body: coupe
+paint: "#1a1a1e"
+notes: "Perfil genérico de cupê (2 portas). Use o assistente para nomear o seu carro e, se quiser, envie uma foto."
